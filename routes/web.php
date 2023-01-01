@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthorController;
+use App\Http\Controllers\Admin\ProductController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -45,6 +46,18 @@ Route::controller(AuthorController::class)->group(function (){
    Route::get('/edit/author/{id}','EditAuthor')->name('edit.author');
    Route::post('/update/author/{id}','UpdateAuthor')->name('update.author');
    Route::get('/delete/author/{id}','DeleteAuthor')->name('delete.author');
+
+});
+
+
+// All Author Routes
+Route::controller(ProductController::class)->group(function (){
+   Route::get('/book','index')->name('book');
+   Route::get('/add/book','AddBook')->name('add.book');
+//   Route::post('/store/author','StoreAuthor')->name('store.author');
+//   Route::get('/edit/author/{id}','EditAuthor')->name('edit.author');
+//   Route::post('/update/author/{id}','UpdateAuthor')->name('update.author');
+//   Route::get('/delete/author/{id}','DeleteAuthor')->name('delete.author');
 
 });
 

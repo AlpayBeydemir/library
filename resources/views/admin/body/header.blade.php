@@ -8,8 +8,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Books</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Books</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="{{ route('add.book') }}">Add Book</a></li>
+                                <li><a class="dropdown-item" href="{{ route('book') }}">Books</a></li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Categories</a>
