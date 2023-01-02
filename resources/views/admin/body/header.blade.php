@@ -11,8 +11,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link active dropdown-toggle" role="button" data-bs-toggle="dropdown" href="#">Books</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="{{ route('add.book') }}">Add Book</a></li>
-                                <li><a class="dropdown-item" href="{{ route('book') }}">Books</a></li>
+                                <li><a class="dropdown-item" href="{{ route('add.product') }}">Add Book</a></li>
+                                <li><a class="dropdown-item" href="{{ route('product') }}">Books</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">

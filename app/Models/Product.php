@@ -21,12 +21,12 @@ class Product extends Model
         return $this->belongsTo(Categories::class, "category_id", "id");
     }
 
-    public function isbn()
-    {
-        return $this->belongsTo(Product_isbn::class, "product_id", "id");
-    }
+//    public function isbn()
+//    {
+//        return $this->belongsTo(Product_isbn::class, "product_id", "id");
+//    }
 
-    public function product_isbn()
+    public function isbn()
     {
         return $this->hasMany(Product_isbn::class);
     }

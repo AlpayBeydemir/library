@@ -27,7 +27,7 @@ class AuthorController extends Controller
 //        dd($request);
 
         try {
-            if (!isset($request->name) || empty($request->name)){
+            if (!isset($request->name) || empty($request->name) || trim($request->name == "")){
                 throw new \Exception("Please Enter Author Name");
             } else{
 
@@ -69,7 +69,7 @@ class AuthorController extends Controller
     {
 
         try {
-            if (!isset($request->name) || empty($request->name)){
+            if (!isset($request->name) || empty($request->name) || trim($request->name == "")){
                 throw new \Exception("Please Enter Author Name");
             }
             else {

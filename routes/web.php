@@ -52,9 +52,9 @@ Route::controller(AuthorController::class)->group(function (){
 
 // All Author Routes
 Route::controller(ProductController::class)->group(function (){
-   Route::get('/book','index')->name('book');
-   Route::get('/add/book','AddBook')->name('add.book');
-//   Route::post('/store/author','StoreAuthor')->name('store.author');
+   Route::get('/product','index')->name('product');
+   Route::get('/add/product','AddProduct')->name('add.product');
+   Route::post('/store/product','StoreProduct')->name('store.product');
 //   Route::get('/edit/author/{id}','EditAuthor')->name('edit.author');
 //   Route::post('/update/author/{id}','UpdateAuthor')->name('update.author');
 //   Route::get('/delete/author/{id}','DeleteAuthor')->name('delete.author');
