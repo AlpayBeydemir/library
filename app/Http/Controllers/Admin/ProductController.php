@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\Author;
 use App\Models\Categories;
 use App\Models\Product_isbn;
+use Intervention\Image\Facades\Image;
 use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
@@ -26,6 +27,7 @@ class ProductController extends Controller
         return view("admin.product.product_add", $data);
     }
 
+
     public function StoreProduct(Request $request)
     {
         try {
@@ -41,17 +43,18 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
-            if (!isset($request->image) || empty($request->image)) {
+            if (!$request->file('image')) {
                 throw new \Exception("Please Upload Image");
             } else {
                 $image_extension = $request->file('image')->getClientOriginalExtension();
                 if ($image_extension != ".jpg" || ".jpeg" || ".png"){
-                    throw  new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
+                    throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
                 } else {
-                    $image_name = $request->image . "." . $image_extension;
+                    $image_name = $request->file('image') . "." . $image_extension;
                     $image_upload = $request->file('image')->move(public_path('images'), $image_name);
                 }
             }
+//dd($request);
 
             // Insert Product Table
             $product = new Product();
@@ -66,34 +69,41 @@ class ProductController extends Controller
             $product->save();
 
             // Insert Product Isbn Table
-            $product_isbn = new Product_isbn();
+            if (!isset($request->isbn) || empty($request->isbn || trim($request->isbn == ""))) {
+                throw new \Exception("Please Enter ISBN Number");
+            } else {
+                foreach ($request->isbn as $key => $value){
 
-            for ($i = 0; $i < count($request->isbn); $i++){
-                $product_isbn->product_id   = $product["isbn"]["id"]; // HATA
-                $product_isbn->product_isbn = $request->isbn;
-                $product_isbn->created_at   = Carbon::now();
+                    $product_isbn = new Product_isbn();
+                    $product_isbn->product_id   = $product->id;
+                    $product_isbn->product_isbn = $request->isbn;
+                    $product_isbn->created_at   = Carbon::now();
 
-                $product_isbn->save();
+                    $product_isbn->save();
+                }
             }
 
-            if ($product->save() && $product_isbn->save()){
+            $jsonData = [
+              "error" => 0,
+              "message" => "Product Inserted Successfuly",
+              'url' => route("product")
+            ];
 
-                $notification = array(
-                    'message'    => 'Product Inserted Successfully',
-                    'alert-type' => 'success'
-                );
-
-                return redirect()->route('product')->with($notification);
-            }
+            echo json_encode($jsonData);
 
         }
         catch (\Exception $e){
-            $notification = array(
-                "message"    => $e->getMessage(),
-                "alert-type" => "error",
-            );
+//            $notification = array(
+//                "message"    => $e->getMessage(),
+//                "alert-type" => "error",
+//            );
 
-            return back()->with($notification);
+            $jsonData = [
+                "error" => 1,
+                "message" => $e->getMessage()
+            ];
+
+            echo json_encode($jsonData);
         }
     }
 }
