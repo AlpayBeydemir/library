@@ -31,29 +31,45 @@ class ProductController extends Controller
     public function StoreProduct(Request $request)
     {
         try {
-            if (!isset($request->author_id) || empty($request->author_id) || trim($request->author_id  == "")){
+            if (!isset($request->author_id) || empty($request->author_id) || trim($request->author_id  ) == ""){
                 throw new \Exception("Please Select Author");
             }
 
-            if (!isset($request->category_id) || empty($request->category_id) || trim($request->category_id  == "")){
+            if (!isset($request->category_id) || empty($request->category_id) || trim($request->category_id) == ""){
                 throw new \Exception("Please Select Category");
             }
 
-            if (!isset($request->name) || empty($request->name || trim($request->name == ""))) {
+            if (!isset($request->name) || empty($request->name || trim($request->name) == "")) {
                 throw new \Exception("Please Enter Book Name");
             }
 
             if (!$request->file('image')) {
                 throw new \Exception("Please Upload Image");
-            } else {
+            }
+            else {
+                // Image Upload
                 $image_extension = $request->file('image')->getClientOriginalExtension();
-                if ($image_extension != ".jpg" || ".jpeg" || ".png"){
-                    throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
-                } else {
-                    $image_name = $request->file('image') . "." . $image_extension;
+                if ($image_extension == "jpg" || "jpeg" || "png")
+                {
+                    $image_name = $request->file('image')->getClientOriginalName();
                     $image_upload = $request->file('image')->move(public_path('images'), $image_name);
                 }
+                else {
+                    throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
+                }
             }
+            if (is_array($request->isbn))
+            {
+                foreach ($request->isbn as $key => $value)
+                {
+                    if (!isset($value) || empty($value))
+                    {
+                        throw new \Exception("Please Enter ISBN Number");
+                    }
+                }
+            }
+
+
 //dd($request);
 
             // Insert Product Table
@@ -62,31 +78,30 @@ class ProductController extends Controller
             $product->author_id   = $request->author_id;
             $product->category_id = $request->category_id;
             $product->name        = $request->name;
-            $product->image       = $image_upload;
+            $product->image       = $image_name;
             $product->is_active   = 1;
             $product->created_at  = Carbon::now();
-
             $product->save();
 
+
             // Insert Product Isbn Table
-            if (!isset($request->isbn) || empty($request->isbn || trim($request->isbn == ""))) {
-                throw new \Exception("Please Enter ISBN Number");
-            } else {
-                foreach ($request->isbn as $key => $value){
 
-                    $product_isbn = new Product_isbn();
-                    $product_isbn->product_id   = $product->id;
-                    $product_isbn->product_isbn = $request->isbn;
-                    $product_isbn->created_at   = Carbon::now();
 
-                    $product_isbn->save();
-                }
-            }
+//                dd($product);
+            foreach ($request->isbn as $key => $value)
+            {
+                $product_isbn_new = new Product_isbn();
+                $product_isbn_new->product_id   = $product->id;
+                $product_isbn_new->product_isbn = $value;
+                $product_isbn_new->created_at   = Carbon::now();
+                $product_isbn_new->save();
+             }
+
 
             $jsonData = [
               "error" => 0,
               "message" => "Product Inserted Successfuly",
-              'url' => route("product")
+              "url" => route("product")
             ];
 
             echo json_encode($jsonData);

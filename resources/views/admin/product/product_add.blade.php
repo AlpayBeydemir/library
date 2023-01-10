@@ -14,7 +14,7 @@
                             </div>
                             <div class="card-body">
 
-                                <form id="product_store" enctype="multipart/form-data">
+                                <form id="product_store" method="POST" action="{{ route('store.product') }}" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">
@@ -99,16 +99,18 @@
             $('#product_store_btn').click(function (){
                 var formData = new FormData();
                 var product_store = $('#product_store').serializeArray();
+                var file_data = $("#image").prop("files")[0];
+                formData.append("image", file_data);
 
                 $.each(product_store, function (key, el){
                     formData.append(el.name, el.value);
                 })
 
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
+                // $.ajaxSetup({
+                //     headers: {
+                //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                //     }
+                // });
 
                $.ajax({
                    url         : "{{ route('store.product') }}",
