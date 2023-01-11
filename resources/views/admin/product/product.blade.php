@@ -16,18 +16,18 @@
                         <th>Action</th>
                     </tr>
                     @php($i = 1)
-                    @foreach($authors as $author)
+                    @foreach($products as $product)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            <td>{{ $author->name }}</td>
-                            <td>{{ $author->name }}</td>
-                            <td>{{ $author->name }}</td>
-                            <td>{{ $author->is_active }}</td>
-                            <td>{{ $author->created_at }}</td>
-                            <td>{{ $author->updated_at }}</td>
+                            <td> <img src="{{ asset( $product->image ) }}"> </td>
+                            <td>{{ $product->name }}</td>
+                            <td>{{ $product->category->name }}</td>
+                            <td>{{ $product->author->name }}</td>
+                            <td>{{ $product->created_at }}</td>
+                            <td>{{ $product->updated_at }}</td>
                             <td>
-                                <a href="{{ route('edit.author', $author->id) }}" class="btn btn-info" title="Edit author"> <i class="fas fa-edit"></i> </a>
-                                <a href="{{ route('delete.author', $author->id) }}" class="btn btn-danger" title="Delete author"> <i class="fas fa-trash-alt"></i> </a>
+                                <a href="{{ route('edit.author', $product->id) }}" class="btn btn-info" title="Edit author"> <i class="fas fa-edit"></i> </a>
+                                <a href="{{ route('delete.author', $product->id) }}" class="btn btn-danger" title="Delete author"> <i class="fas fa-trash-alt"></i> </a>
                             </td>
                         </tr>
                     @endforeach

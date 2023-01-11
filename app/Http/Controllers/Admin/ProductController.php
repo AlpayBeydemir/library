@@ -16,7 +16,7 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data['authors'] = Product::all();
+        $data['products'] = Product::all();
         return view("admin.product.product", $data);
     }
 
