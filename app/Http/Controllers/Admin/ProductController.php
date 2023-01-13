@@ -56,7 +56,7 @@ class ProductController extends Controller
                 {
                     $image = $request->file('image');
                     $image_name = date('YmdHi'). '.' . $image->getClientOriginalName();
-                    $image_upload = $image->move(public_path('images'), $image_name);
+                    $image_upload = $image->storeAs('uploads', $image_name, 'public');
 //                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
                 }
                 else {
@@ -91,7 +91,6 @@ class ProductController extends Controller
 
 
             // Insert Product Isbn Table
-//                dd($product);
             create_isbn($request->stock, $product->id);
 
 //            foreach ($request->isbn as $key => $value)
@@ -134,5 +133,79 @@ class ProductController extends Controller
         $data['categories'] = Categories::all();
         $data['products'] = Product::findOrFail($id);
         return view("admin.product.product_edit", $data);
+    }
+
+    public function UpdateProduct(Request $request, $id)
+    {
+        try {
+            if (!isset($request->author_id) || empty($request->author_id) || trim($request->author_id  ) == ""){
+                throw new \Exception("Please Select Author");
+            }
+
+            if (!isset($request->category_id) || empty($request->category_id) || trim($request->category_id) == ""){
+                throw new \Exception("Please Select Category");
+            }
+
+            if (!isset($request->name) || empty($request->name || trim($request->name) == "")) {
+                throw new \Exception("Please Enter Book Name");
+            }
+
+            if (!isset($request->stock) || empty($request->name)) {
+                throw new \Exception("Please Enter Stock Number");
+            }
+
+            if (!$request->file('image')) {
+                throw new \Exception("Please Upload Image");
+            }
+            else {
+                // Image Upload
+                $image_extension = $request->file('image')->getClientOriginalExtension();
+                if ($image_extension == "jpg" || "jpeg" || "png")
+                {
+                    $image = $request->file('image');
+                    $image_name = date('YmdHi'). '.' . $image->getClientOriginalName();
+                    $image_upload = $image->storeAs('uploads', $image_name, 'public');
+//                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
+                }
+                else {
+                    throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
+                }
+            }
+
+//dd($request);
+
+            // Insert Product Table
+            $product = Product::find($id);
+
+            $product->author_id   = $request->author_id;
+            $product->category_id = $request->category_id;
+            $product->name        = $request->name;
+            $product->stock       = $request->stock;
+            $product->image       = $image_upload;
+
+            $product->update();
+
+
+            // Insert Product Isbn Table
+            create_isbn($request->stock, $product->id);
+
+            $jsonData = [
+                "error" => 0,
+                "message" => "Product Inserted Successfuly",
+                "url" => route("product")
+            ];
+
+            echo json_encode($jsonData);
+
+        }
+        catch (\Exception $e){
+
+            $jsonData = [
+                "error" => 1,
+                "message" => $e->getMessage()
+            ];
+
+            echo json_encode($jsonData);
+        }
     }
 }

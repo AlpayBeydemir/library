@@ -14,7 +14,7 @@
                             </div>
                             <div class="card-body">
 
-                                <form id="product_store" method="POST" action="{{ route('store.product') }}" enctype="multipart/form-data">
+                                <form id="product_update" method="POST" action="{{ route('store.product') }}" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">
@@ -32,7 +32,7 @@
                                         <select class="form-select" name="category_id" id="category_id">
                                             <option value=""> Select </option>
                                             @foreach($categories as $category)
-                                                <option value="{{ $category->id }}" {{ $category->id == $products->category_id ? 'selected' : '' }} > {{ $category->name }} </option>
+                                                <option value="{{ $category->id }}" {{ $category->id == $products->author_id ? 'selected' : '' }} > {{ $category->name }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -43,28 +43,40 @@
                                     </div>
 
                                     <div class="mb-3">
-                                        <label for="image" class="form-label"> Image </label>
-                                        <input type="file" class="form-control" name="image" id="image" value="{{ $products->image }}">
+                                        <label for="name" class="form-label"> Stock Number </label>
+                                        <input type="number" class="form-control" name="stock" id="stock" min="0" value="{{ $products->stock }}">
                                     </div>
 
-                                    <div id="firstProduct">
-                                        <div class="product_isbn">s
-                                            <div class="mb-3">
-                                                <label for="isbn" class="form-label"> ISBN Number </label>
-                                                <input type="text" class="form-control" name="isbn[]" id="isbn" >
-                                            </div>
+                                    <div class="mb-3">
+                                        <label for="image" class="form-label"> Image </label>
+                                        <input type="file" class="form-control" name="image" id="image">
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="example-text-input" class="col-sm-2 col-form-label">  </label>
+                                        <div class="col-sm-10">
+                                            <img id="showImage" class="rounded avatar-lg" src="{{ Storage::url($products->image) }}" alt="Card image cap">
                                         </div>
                                     </div>
 
-                                    <div id="moreProduct">
+                                    {{--                                    <div id="firstProduct">--}}
+                                    {{--                                        <div class="product_isbn">--}}
+                                    {{--                                            <div class="mb-3">--}}
+                                    {{--                                                <label for="isbn" class="form-label"> ISBN Number </label>--}}
+                                    {{--                                                <input type="text" class="form-control" name="isbn[]" id="isbn">--}}
+                                    {{--                                            </div>--}}
+                                    {{--                                        </div>--}}
+                                    {{--                                    </div>--}}
 
-                                    </div>
+                                    {{--                                    <div id="moreProduct">--}}
 
-                                    <button type="button" class="btn btn-info" onclick="addProduct();"> Add More ISBN Number </button>
-                                    <button type="button" class="btn btn-danger" onclick="removeProduct();"> Remove ISBN Number </button>
+                                    {{--                                    </div>--}}
+
+                                    {{--                                    <button type="button" class="btn btn-info" onclick="addProduct();"> Add More ISBN Number </button>--}}
+                                    {{--                                    <button type="button" class="btn btn-danger" onclick="removeProduct();"> Remove ISBN Number </button>--}}
                                     <br>
 
-                                    <button type="button" id="product_store_btn" class="btn btn-primary mt-3">Submit</button>
+                                    <button type="button" id="product_update_btn" class="btn btn-primary mt-3">Submit</button>
 
                                 </form>
 
@@ -96,13 +108,13 @@
             // var isbn        = $('#isbn').val();
             // var image       = $('#image').val();
 
-            $('#product_store_btn').click(function (){
+            $('#product_update_btn').click(function (){
                 var formData = new FormData();
-                var product_store = $('#product_store').serializeArray();
+                var product_update = $('#product_update').serializeArray();
                 var file_data = $("#image").prop("files")[0];
                 formData.append("image", file_data);
 
-                $.each(product_store, function (key, el){
+                $.each(product_update, function (key, el){
                     formData.append(el.name, el.value);
                 })
 
@@ -113,7 +125,7 @@
                 // });
 
                 $.ajax({
-                    url         : "{{ route('store.product') }}",
+                    url         : "{{ route('update.product') }}",
                     method      : "POST",
                     processData : false,
                     contentType : false,
@@ -142,6 +154,17 @@
         });
     </script>
 
-@endsection()
+    <script>
+        $(document).ready(function (){
+           $('#image').change(function (e){
+              var reader = new FileReader();
+              reader.onload = function (e){
+                  $('#showImage').attr('src', e.target.result);
+              }
+              reader.readAsDataURL(e.target.files[0]);
+           });
+        });
+    </script>
 
+@endsection()
 

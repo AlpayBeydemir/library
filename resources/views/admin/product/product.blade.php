@@ -11,6 +11,7 @@
                         <th>Book Name</th>
                         <th>Category</th>
                         <th>Author</th>
+                        <th>Stock</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                         <th>Action</th>
@@ -19,10 +20,11 @@
                     @foreach($products as $product)
                         <tr>
                             <td>{{ $i++ }}</td>
-                            <td><img src="{{ asset($product->image) }}" style="width: 60px; height: 50px;"></td>
+                            <td><img src="{{ Storage::url($product->image) }}" style="width: 60px; height: 50px;"></td>
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->author->name }}</td>
+                            <td>{{ $product->stock }}</td>
                             <td>{{ $product->created_at }}</td>
                             <td>{{ $product->updated_at }}</td>
                             <td>
