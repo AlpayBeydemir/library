@@ -10,7 +10,7 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header">
-                                <h3>Add New Product</h3>
+                                <h3>Edit {{ $products->name }} Product</h3>
                             </div>
                             <div class="card-body">
 
@@ -21,9 +21,9 @@
                                         <label for="author_id" class="form-label"> Select Author </label>
                                         <select class="form-select" name="author_id" id="author_id">
                                             <option value=""> Select </option>
-                                                @foreach($authors as $author)
-                                                    <option value="{{ $author->id }}"> {{ $author->name }} </option>
-                                                @endforeach
+                                            @foreach($authors as $author)
+                                                <option value="{{ $author->id }}" {{ $author->id == $products->author_id ? 'selected' : '' }} > {{ $author->name }} </option>
+                                            @endforeach
                                         </select>
                                     </div>
 
@@ -32,41 +32,36 @@
                                         <select class="form-select" name="category_id" id="category_id">
                                             <option value=""> Select </option>
                                             @foreach($categories as $category)
-                                                <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                                                <option value="{{ $category->id }}" {{ $category->id == $products->category_id ? 'selected' : '' }} > {{ $category->name }} </option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="name" class="form-label"> Book Name </label>
-                                        <input type="text" class="form-control" name="name" id="name">
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label"> Stock Number </label>
-                                        <input type="number" class="form-control" name="stock" id="stock" min="0">
+                                        <input type="text" class="form-control" name="name" id="name" value="{{ $products->name }}">
                                     </div>
 
                                     <div class="mb-3">
                                         <label for="image" class="form-label"> Image </label>
-                                        <input type="file" class="form-control" name="image" id="image">
+                                        <input type="file" class="form-control" name="image" id="image" value="{{ $products->image }}">
                                     </div>
 
-{{--                                    <div id="firstProduct">--}}
-{{--                                        <div class="product_isbn">--}}
-{{--                                            <div class="mb-3">--}}
-{{--                                                <label for="isbn" class="form-label"> ISBN Number </label>--}}
-{{--                                                <input type="text" class="form-control" name="isbn[]" id="isbn">--}}
-{{--                                            </div>--}}
-{{--                                        </div>--}}
-{{--                                    </div>--}}
+                                    <div id="firstProduct">
+                                        <div class="product_isbn">s
+                                            <div class="mb-3">
+                                                <label for="isbn" class="form-label"> ISBN Number </label>
+                                                <input type="text" class="form-control" name="isbn[]" id="isbn" >
+                                            </div>
+                                        </div>
+                                    </div>
 
-{{--                                    <div id="moreProduct">--}}
+                                    <div id="moreProduct">
 
-{{--                                    </div>--}}
+                                    </div>
 
-{{--                                    <button type="button" class="btn btn-info" onclick="addProduct();"> Add More ISBN Number </button>--}}
-{{--                                    <button type="button" class="btn btn-danger" onclick="removeProduct();"> Remove ISBN Number </button>--}}
+                                    <button type="button" class="btn btn-info" onclick="addProduct();"> Add More ISBN Number </button>
+                                    <button type="button" class="btn btn-danger" onclick="removeProduct();"> Remove ISBN Number </button>
                                     <br>
 
                                     <button type="button" id="product_store_btn" class="btn btn-primary mt-3">Submit</button>
@@ -117,35 +112,36 @@
                 //     }
                 // });
 
-               $.ajax({
-                   url         : "{{ route('store.product') }}",
-                   method      : "POST",
-                   processData : false,
-                   contentType : false,
-                   cache       : false,
-                   data        : formData,
-                       // author_id    : author_id,
-                       // category_id  : category_id,
-                       // name         : name,
-                       // isbn         : isbn,
-                       // image        : image,
+                $.ajax({
+                    url         : "{{ route('store.product') }}",
+                    method      : "POST",
+                    processData : false,
+                    contentType : false,
+                    cache       : false,
+                    data        : formData,
+                    // author_id    : author_id,
+                    // category_id  : category_id,
+                    // name         : name,
+                    // isbn         : isbn,
+                    // image        : image,
 
-                   success     : function (data){
-                         var result = JSON.parse(data);
-                         if (result.error == 1)
-                         {
-                             toastr.error(result.message);
-                         }
-                         else
-                         {
-                             toastr.success(result.message);
-                             location.href = result.url;
-                         }
-                   }
-               });
+                    success     : function (data){
+                        var result = JSON.parse(data);
+                        if (result.error == 1)
+                        {
+                            toastr.error(result.message);
+                        }
+                        else
+                        {
+                            toastr.success(result.message);
+                            location.href = result.url;
+                        }
+                    }
+                });
             });
         });
     </script>
 
 @endsection()
+
 

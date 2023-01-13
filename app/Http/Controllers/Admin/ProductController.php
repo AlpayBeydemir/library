@@ -27,7 +27,6 @@ class ProductController extends Controller
         return view("admin.product.product_add", $data);
     }
 
-
     public function StoreProduct(Request $request)
     {
         try {
@@ -43,6 +42,10 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
+            if (!isset($request->stock) || empty($request->name)) {
+                throw new \Exception("Please Enter Stock Number");
+            }
+
             if (!$request->file('image')) {
                 throw new \Exception("Please Upload Image");
             }
@@ -51,23 +54,25 @@ class ProductController extends Controller
                 $image_extension = $request->file('image')->getClientOriginalExtension();
                 if ($image_extension == "jpg" || "jpeg" || "png")
                 {
-                    $image_name = $request->file('image')->getClientOriginalName();
-                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
+                    $image = $request->file('image');
+                    $image_name = date('YmdHi'). '.' . $image->getClientOriginalName();
+                    $image_upload = $image->move(public_path('images'), $image_name);
+//                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
                 }
                 else {
                     throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
                 }
             }
-            if (is_array($request->isbn))
-            {
-                foreach ($request->isbn as $key => $value)
-                {
-                    if (!isset($value) || empty($value))
-                    {
-                        throw new \Exception("Please Enter ISBN Number");
-                    }
-                }
-            }
+//            if (is_array($request->isbn))
+//            {
+//                foreach ($request->isbn as $key => $value)
+//                {
+//                    if (!isset($value) || empty($value))
+//                    {
+//                        throw new \Exception("Please Enter ISBN Number");
+//                    }
+//                }
+//            }
 
 
 //dd($request);
@@ -78,24 +83,25 @@ class ProductController extends Controller
             $product->author_id   = $request->author_id;
             $product->category_id = $request->category_id;
             $product->name        = $request->name;
-            $product->image       = $image_name;
-            $product->is_active   = 1;
-            $product->created_at  = Carbon::now();
+            $product->stock       = $request->stock;
+            $product->image       = $image_upload;
+//            $product->is_active   = 0;
+//            $product->created_at  = Carbon::now();
             $product->save();
 
 
             // Insert Product Isbn Table
-
-
 //                dd($product);
-            foreach ($request->isbn as $key => $value)
-            {
-                $product_isbn_new = new Product_isbn();
-                $product_isbn_new->product_id   = $product->id;
-                $product_isbn_new->product_isbn = $value;
-                $product_isbn_new->created_at   = Carbon::now();
-                $product_isbn_new->save();
-             }
+            create_isbn($request->stock, $product->id);
+
+//            foreach ($request->isbn as $key => $value)
+//            {
+//                $product_isbn_new = new Product_isbn();
+//                $product_isbn_new->product_id   = $product->id;
+//                $product_isbn_new->product_isbn = $value;
+//                $product_isbn_new->created_at   = Carbon::now();
+//                $product_isbn_new->save();
+//             }
 
 
             $jsonData = [
@@ -120,5 +126,13 @@ class ProductController extends Controller
 
             echo json_encode($jsonData);
         }
+    }
+
+    public function EditProduct($id)
+    {
+        $data['authors'] = Author::all();
+        $data['categories'] = Categories::all();
+        $data['products'] = Product::findOrFail($id);
+        return view("admin.product.product_edit", $data);
     }
 }

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->integer("author_id");
             $table->integer("category_id");
             $table->string("name");
+            $table->integer("stock");
             $table->string("image");
             $table->tinyInteger("is_active")->default('0')->comment("0 => Is Available , 1 => Is not Available");
             $table->tinyInteger("status")->default('0')->comment("0 => In the Library , 1 => At a Student");
