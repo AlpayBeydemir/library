@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Product_author;
 use Illuminate\Http\Request;
 use http\Exception;
 use App\Models\Product;
@@ -17,6 +18,7 @@ class ProductController extends Controller
     public function index()
     {
         $data['products'] = Product::all();
+//        $data['author'] = Product::with('author')->get();
         return view("admin.product.product", $data);
     }
 
@@ -30,7 +32,7 @@ class ProductController extends Controller
     public function StoreProduct(Request $request)
     {
         try {
-            if (!isset($request->author_id) || empty($request->author_id) || trim($request->author_id  ) == ""){
+            if (!isset($request->author_id) || empty($request->author_id)){
                 throw new \Exception("Please Select Author");
             }
 
@@ -42,7 +44,23 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
-            if (!isset($request->stock) || empty($request->name)) {
+            if (!isset($request->publisher) || empty($request->publisher || trim($request->publisher) == "")) {
+                throw new \Exception("Please Enter Publisher Name");
+            }
+
+            if (!isset($request->publication_year) || empty($request->publication_year || trim($request->publication_year) == "")) {
+                throw new \Exception("Please Enter Publisher Year");
+            }
+
+            if (!isset($request->language) || empty($request->language || trim($request->language) == "")) {
+                throw new \Exception("Please Enter Publisher Year");
+            }
+
+            if (!isset($request->stock) || empty($request->stock)) {
+                throw new \Exception("Please Enter Stock Number");
+            }
+
+            if (!isset($request->isbn) || empty($request->isbn)) {
                 throw new \Exception("Please Enter Stock Number");
             }
 
@@ -80,27 +98,30 @@ class ProductController extends Controller
             // Insert Product Table
             $product = new Product();
 
-            $product->author_id   = $request->author_id;
-            $product->category_id = $request->category_id;
-            $product->name        = $request->name;
-            $product->stock       = $request->stock;
-            $product->image       = $image_upload;
+            $product->category_id      = $request->category_id;
+            $product->name             = $request->name;
+            $product->publisher        = $request->publisher;
+            $product->publication_year = $request->publication_year;
+            $product->language         = $request->language;
+            $product->stock            = $request->stock;
+            $product->isbn             = $request->isbn;
+            $product->image            = $image_upload;
 //            $product->is_active   = 0;
 //            $product->created_at  = Carbon::now();
             $product->save();
-
+//dd($product);
 
             // Insert Product Isbn Table
-            create_isbn($request->stock, $product->id);
 
-//            foreach ($request->isbn as $key => $value)
-//            {
-//                $product_isbn_new = new Product_isbn();
-//                $product_isbn_new->product_id   = $product->id;
-//                $product_isbn_new->product_isbn = $value;
-//                $product_isbn_new->created_at   = Carbon::now();
-//                $product_isbn_new->save();
-//             }
+            foreach ($request->author_id as $key => $value)
+            {
+                $product_author_new = new Product_author();
+
+                $product_author_new->product_id   = $product->id;
+                $product_author_new->author_id    = $value;
+
+                $product_author_new->save();
+             }
 
 
             $jsonData = [
@@ -129,9 +150,9 @@ class ProductController extends Controller
 
     public function EditProduct($id)
     {
-        $data['authors'] = Author::all();
+        $data['authors']    = Author::all();
         $data['categories'] = Categories::all();
-        $data['products'] = Product::findOrFail($id);
+        $data['products']   = Product::findOrFail($id);
         return view("admin.product.product_edit", $data);
     }
 

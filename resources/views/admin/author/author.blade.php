@@ -8,7 +8,6 @@
                     <tr>
                         <th>Number</th>
                         <th>Author Name</th>
-                        <th>Status</th>
                         <th>Created At</th>
                         <th>Updated At</th>
                         <th>Action</th>
@@ -18,7 +17,6 @@
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $author->name }}</td>
-                            <td>{{ $author->is_active }}</td>
                             <td>{{ $author->created_at }}</td>
                             <td>{{ $author->updated_at }}</td>
                             <td>

@@ -5,14 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Author extends Model
+class Product_author extends Model
 {
     use HasFactory;
 
-    protected $guarded = [];
+    protected $table = "product_author";
 
-    public function product()
-    {
-        return $this->belongsToMany(Product::class);
-    }
+    protected $guarded = [];
 }

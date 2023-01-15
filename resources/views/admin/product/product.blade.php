@@ -9,6 +9,7 @@
                         <th>Number</th>
                         <th>Image</th>
                         <th>Book Name</th>
+                        <th>Publisher</th>
                         <th>Category</th>
                         <th>Author</th>
                         <th>Stock</th>
@@ -22,6 +23,7 @@
                             <td>{{ $i++ }}</td>
                             <td><img src="{{ Storage::url($product->image) }}" style="width: 60px; height: 50px;"></td>
                             <td>{{ $product->name }}</td>
+                            <td>{{ $product->publisher }}</td>
                             <td>{{ $product->category->name }}</td>
                             <td>{{ $product->author->name }}</td>
                             <td>{{ $product->stock }}</td>

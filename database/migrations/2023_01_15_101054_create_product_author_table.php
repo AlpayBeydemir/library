@@ -13,10 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('authors', function (Blueprint $table) {
+        Schema::create('product_author', function (Blueprint $table) {
             $table->id();
-            $table->string("name")->unique();
+            $table->unsignedBigInteger('product_id');
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
+
+            $table->foreign('product_id')->references('id')->on('products');
+            $table->foreign('author_id')->references('id')->on('authors');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('authors');
+        Schema::dropIfExists('product_author');
     }
 };

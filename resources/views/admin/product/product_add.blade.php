@@ -18,8 +18,8 @@
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label for="author_id" class="form-label"> Select Author </label>
-                                        <select class="form-select" name="author_id" id="author_id">
+                                        <label for="author_id" class="form-label select-label"> Select Author </label>
+                                        <select class="form-select" name="author_id[]" id="author_id" multiple>
                                             <option value=""> Select </option>
                                                 @foreach($authors as $author)
                                                     <option value="{{ $author->id }}"> {{ $author->name }} </option>
@@ -43,8 +43,28 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="publisher" class="form-label"> Publisher </label>
+                                        <input type="text" class="form-control" name="publisher" id="publisher">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="publication_year" class="form-label"> Publication Year </label>
+                                        <input type="number" class="form-control" name="publication_year" id="publication_year" min="1900" max="3000">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="language" class="form-label"> Language </label>
+                                        <input type="text" class="form-control" name="language" id="language">
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="name" class="form-label"> Stock Number </label>
                                         <input type="number" class="form-control" name="stock" id="stock" min="0">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label"> ISBN Number </label>
+                                        <input type="number" class="form-control" name="isbn" id="isbn" min="0">
                                     </div>
 
                                     <div class="mb-3">

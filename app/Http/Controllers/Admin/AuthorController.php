@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use http\Exception;
 use Illuminate\Http\Request;
 use App\Models\Author;
-use Illuminate\Support\Carbon;
 
 class AuthorController extends Controller
 {
@@ -34,8 +33,6 @@ class AuthorController extends Controller
                 $author = new Author();
 
                 $author->name       = $request->name;
-                $author->is_active  = 1;
-                $author->created_at = Carbon::now();
 
                 $author->save();
 
@@ -76,8 +73,6 @@ class AuthorController extends Controller
                 $author = Author::find($id);
 
                 $author->name       = $request->name;
-                $author->is_active  = 1;
-                $author->updated_at = Carbon::now();
 
                 $author->update();
 
