@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-
+    protected $table = "products";
     protected $guarded = [];
 
     public function author()
     {
-        return $this->belongsToMany(Author::class);
+//        return $this->belongsToMany(Author::class, "author_product", "product_id", "author_id");
+        return $this->hasMany(Author_product::class, 'product_id','id');
     }
 
     public function category()

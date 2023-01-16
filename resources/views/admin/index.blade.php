@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Admin Dashboard </title>
 
-{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
+    {{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -40,19 +40,19 @@
 
 <div class="container">
 
-<!--Header Start-->
+    <!--Header Start-->
     @include('admin.body.header')
-<!--Header End-->
+    <!--Header End-->
 
 
-<!--Main Content Start-->
+    <!--Main Content Start-->
     @yield('admin')
-<!--Main Content End-->
+    <!--Main Content End-->
 
 
-<!--Header Start-->
+    <!--Header Start-->
     @include('admin.body.footer')
-<!--Header End-->
+    <!--Header End-->
 
 </div>
 
@@ -85,3 +85,4 @@
 </body>
 
 </html>
+

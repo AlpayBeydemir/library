@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Author extends Model
 {
     use HasFactory;
-
+    protected $table = "authors";
     protected $guarded = [];
 
     public function product()

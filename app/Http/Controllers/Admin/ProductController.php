@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Product_author;
+use App\Models\Author_product;
 use Illuminate\Http\Request;
 use http\Exception;
 use App\Models\Product;
@@ -18,6 +18,8 @@ class ProductController extends Controller
     public function index()
     {
         $data['products'] = Product::all();
+        $data['all'] = Author_product::all();
+        dd($data['products']->author);
 //        $data['author'] = Product::with('author')->get();
         return view("admin.product.product", $data);
     }
@@ -115,12 +117,12 @@ class ProductController extends Controller
 
             foreach ($request->author_id as $key => $value)
             {
-                $product_author_new = new Product_author();
+                $author_product_new = new Author_product();
 
-                $product_author_new->product_id   = $product->id;
-                $product_author_new->author_id    = $value;
+                $author_product_new->author_id    = $value;
+                $author_product_new->product_id   = $product->id;
 
-                $product_author_new->save();
+                $author_product_new->save();
              }
 
 
