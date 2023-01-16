@@ -14,7 +14,7 @@ class Product extends Model
     public function author()
     {
 //        return $this->belongsToMany(Author::class, "author_product", "product_id", "author_id");
-        return $this->hasMany(Author_product::class, 'product_id','id');
+        return $this->belongsToMany(Author::class);
     }
 
     public function category()

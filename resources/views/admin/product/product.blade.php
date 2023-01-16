@@ -11,7 +11,7 @@
                         <th>Book Name</th>
                         <th>Publisher</th>
                         <th>Category</th>
-                        <th>Author</th>
+                        <th>Authors</th>
                         <th>Stock</th>
                         <th>Created At</th>
                         <th>Updated At</th>
@@ -25,7 +25,11 @@
                             <td>{{ $product->name }}</td>
                             <td>{{ $product->publisher }}</td>
                             <td>{{ $product->category->name }}</td>
-                            <td>{{ $product->author->name }}</td>
+                                <td>
+                                    @foreach($product->author as $auth)
+                                    <li>{{ $auth->name }}</li>
+                                    @endforeach
+                                </td>
                             <td>{{ $product->stock }}</td>
                             <td>{{ $product->created_at }}</td>
                             <td>{{ $product->updated_at }}</td>

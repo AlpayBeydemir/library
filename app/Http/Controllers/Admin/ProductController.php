@@ -17,10 +17,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data['products'] = Product::all();
-        $data['all'] = Author_product::all();
-        dd($data['products']->author);
-//        $data['author'] = Product::with('author')->get();
+        $data['products'] = Product::with('author')->get();
+//        dd($data);
+
         return view("admin.product.product", $data);
     }
 
@@ -108,12 +107,11 @@ class ProductController extends Controller
             $product->stock            = $request->stock;
             $product->isbn             = $request->isbn;
             $product->image            = $image_upload;
-//            $product->is_active   = 0;
-//            $product->created_at  = Carbon::now();
+
             $product->save();
 //dd($product);
 
-            // Insert Product Isbn Table
+            // Insert Author_product Table
 
             foreach ($request->author_id as $key => $value)
             {
