@@ -102,15 +102,15 @@
         </div>
     </div>
 
-    <script type="text/javascript">
-        function addProduct(){
-            $("#firstProduct .product_isbn").clone().find("input").val("").end().appendTo("#moreProduct");
-        }
+{{--    <script type="text/javascript">--}}
+{{--        function addProduct(){--}}
+{{--            $("#firstProduct .product_isbn").clone().find("input").val("").end().appendTo("#moreProduct");--}}
+{{--        }--}}
 
-        function removeProduct(){
-            $("#moreProduct .product_isbn").last().remove();
-        }
-    </script>
+{{--        function removeProduct(){--}}
+{{--            $("#moreProduct .product_isbn").last().remove();--}}
+{{--        }--}}
+{{--    </script>--}}
 
     <script type="text/javascript">
         $(document).ready(function (){

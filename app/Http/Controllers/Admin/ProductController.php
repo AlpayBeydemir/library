@@ -150,20 +150,36 @@ class ProductController extends Controller
 
     public function EditProduct($id)
     {
-        $data['authors']    = Author::all();
+        $authors = Author::all();
         $data['categories'] = Categories::all();
-        $data['products']   = Product::findOrFail($id);
+        $products = Product::findOrFail($id);
+        $selected = [];
+        foreach ($products->author as $product){
+            $selected[] = $product->id;
+        }
+        foreach ($authors as $author){
+            if (in_array($author->id, $selected)){
+                $author->selected = 1;
+            }
+            else{
+                $author->selected = 0;
+            }
+        }
+
+        $data['products'] = $products;
+        $data['authors'] = $authors;
+//        dd($authors);
         return view("admin.product.product_edit", $data);
     }
 
     public function UpdateProduct(Request $request, $id)
     {
         try {
-            if (!isset($request->author_id) || empty($request->author_id) || trim($request->author_id  ) == ""){
+            if (!isset($request->author_id) || empty($request->author_id)){
                 throw new \Exception("Please Select Author");
             }
 
-            if (!isset($request->category_id) || empty($request->category_id) || trim($request->category_id) == ""){
+            if (!isset($request->category_id) || empty($request->category_id)){
                 throw new \Exception("Please Select Category");
             }
 
@@ -171,14 +187,27 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
-            if (!isset($request->stock) || empty($request->name)) {
+            if (!isset($request->publisher) || empty($request->publisher || trim($request->publisher) == "")) {
+                throw new \Exception("Please Enter Publisher Name");
+            }
+
+            if (!isset($request->publication_year) || empty($request->publication_year || trim($request->publication_year) == "")) {
+                throw new \Exception("Please Enter Publisher Year");
+            }
+
+            if (!isset($request->language) || empty($request->language || trim($request->language) == "")) {
+                throw new \Exception("Please Enter Publisher Year");
+            }
+
+            if (!isset($request->stock) || empty($request->stock)) {
                 throw new \Exception("Please Enter Stock Number");
             }
 
-            if (!$request->file('image')) {
-                throw new \Exception("Please Upload Image");
+            if (!isset($request->isbn) || empty($request->isbn)) {
+                throw new \Exception("Please Enter Stock Number");
             }
-            else {
+
+            if ($request->file('image')) {
                 // Image Upload
                 $image_extension = $request->file('image')->getClientOriginalExtension();
                 if ($image_extension == "jpg" || "jpeg" || "png")
@@ -187,32 +216,67 @@ class ProductController extends Controller
                     $image_name = date('YmdHi'). '.' . $image->getClientOriginalName();
                     $image_upload = $image->storeAs('uploads', $image_name, 'public');
 //                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
+
+                    // Update Product Table
+                    $product = Product::find($id);
+
+                    $product->category_id      = $request->category_id;
+                    $product->name             = $request->name;
+                    $product->publisher        = $request->publisher;
+                    $product->publication_year = $request->publication_year;
+                    $product->language         = $request->language;
+                    $product->stock            = $request->stock;
+                    $product->isbn             = $request->isbn;
+                    $product->image            = $image_upload;
+
+                    $product->update();
+
+
+                    // Insert Author_product Table
+                    foreach ($request->author_id as $key => $value)
+                    {
+                        $author_product = Author_product::find($id);
+
+                        $author_product->author_id    = $value;
+//                $author_product->product_id   = $product->id;
+
+                        $author_product->update();
+                    }
                 }
                 else {
                     throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
                 }
             }
+            else {
+                // Update Product Table
+                $product = Product::find($id);
 
-//dd($request);
+                $product->category_id      = $request->category_id;
+                $product->name             = $request->name;
+                $product->publisher        = $request->publisher;
+                $product->publication_year = $request->publication_year;
+                $product->language         = $request->language;
+                $product->stock            = $request->stock;
+                $product->isbn             = $request->isbn;
 
-            // Insert Product Table
-            $product = Product::find($id);
-
-            $product->author_id   = $request->author_id;
-            $product->category_id = $request->category_id;
-            $product->name        = $request->name;
-            $product->stock       = $request->stock;
-            $product->image       = $image_upload;
-
-            $product->update();
+                $product->update();
 
 
-            // Insert Product Isbn Table
-            create_isbn($request->stock, $product->id);
+                // Insert Author_product Table
+                foreach ($request->author_id as $key => $value)
+                {
+                    $author_product = Author_product::find($id);
+
+                    $author_product->author_id    = $value;
+//                $author_product->product_id   = $product->id;
+
+                    $author_product->update();
+                }
+            }
 
             $jsonData = [
                 "error" => 0,
-                "message" => "Product Inserted Successfuly",
+                "message" => "Product Updated Successfuly",
                 "url" => route("product")
             ];
 

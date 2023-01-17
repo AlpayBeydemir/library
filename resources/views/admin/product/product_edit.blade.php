@@ -14,15 +14,15 @@
                             </div>
                             <div class="card-body">
 
-                                <form id="product_update" method="POST" action="{{ route('store.product') }}" enctype="multipart/form-data">
+                                <form id="product_update" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label for="author_id" class="form-label"> Select Author </label>
-                                        <select class="form-select" name="author_id" id="author_id">
+                                        <label for="author_id" class="form-label select-label"> Select Author </label>
+                                        <select class="form-select" name="author_id[]" id="author_id" multiple>
                                             <option value=""> Select </option>
                                             @foreach($authors as $author)
-                                                <option value="{{ $author->id }}" {{ $author->id == $products->author_id ? 'selected' : '' }} > {{ $author->name }} </option>
+                                                <option {{ $author->selected == 1 ? 'selected' : '' }} value="{{ $author->id }}" > {{ $author->name }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -32,7 +32,7 @@
                                         <select class="form-select" name="category_id" id="category_id">
                                             <option value=""> Select </option>
                                             @foreach($categories as $category)
-                                                <option value="{{ $category->id }}" {{ $category->id == $products->author_id ? 'selected' : '' }} > {{ $category->name }} </option>
+                                                <option value="{{ $category->id }}" {{ $category->id == $products->category_id ? 'selected' : '' }} > {{ $category->name }} </option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -43,8 +43,28 @@
                                     </div>
 
                                     <div class="mb-3">
+                                        <label for="publisher" class="form-label"> Publisher </label>
+                                        <input type="text" class="form-control" name="publisher" id="publisher" value="{{ $products->publisher }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="publication_year" class="form-label"> Publication Year </label>
+                                        <input type="number" class="form-control" name="publication_year" id="publication_year" min="1900" max="3000" value="{{ $products->publication_year }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="language" class="form-label"> Language </label>
+                                        <input type="text" class="form-control" name="language" id="language" value="{{ $products->language }}">
+                                    </div>
+
+                                    <div class="mb-3">
                                         <label for="name" class="form-label"> Stock Number </label>
                                         <input type="number" class="form-control" name="stock" id="stock" min="0" value="{{ $products->stock }}">
+                                    </div>
+
+                                    <div class="mb-3">
+                                        <label for="name" class="form-label"> ISBN Number </label>
+                                        <input type="number" class="form-control" name="isbn" id="isbn" min="0" value="{{ $products->isbn }}">
                                     </div>
 
                                     <div class="mb-3">
@@ -59,24 +79,9 @@
                                         </div>
                                     </div>
 
-                                    {{--                                    <div id="firstProduct">--}}
-                                    {{--                                        <div class="product_isbn">--}}
-                                    {{--                                            <div class="mb-3">--}}
-                                    {{--                                                <label for="isbn" class="form-label"> ISBN Number </label>--}}
-                                    {{--                                                <input type="text" class="form-control" name="isbn[]" id="isbn">--}}
-                                    {{--                                            </div>--}}
-                                    {{--                                        </div>--}}
-                                    {{--                                    </div>--}}
-
-                                    {{--                                    <div id="moreProduct">--}}
-
-                                    {{--                                    </div>--}}
-
-                                    {{--                                    <button type="button" class="btn btn-info" onclick="addProduct();"> Add More ISBN Number </button>--}}
-                                    {{--                                    <button type="button" class="btn btn-danger" onclick="removeProduct();"> Remove ISBN Number </button>--}}
                                     <br>
 
-                                    <button type="button" id="product_update_btn" class="btn btn-primary mt-3">Submit</button>
+                                    <button type="button" id="product_update_btn" class="btn btn-success mt-3">Update Product</button>
 
                                 </form>
 
@@ -90,23 +95,7 @@
     </div>
 
     <script type="text/javascript">
-        function addProduct(){
-            $("#firstProduct .product_isbn").clone().find("input").val("").end().appendTo("#moreProduct");
-        }
-
-        function removeProduct(){
-            $("#moreProduct .product_isbn").last().remove();
-        }
-    </script>
-
-    <script type="text/javascript">
         $(document).ready(function (){
-
-            // var author_id   = $('#author_id').val();
-            // var category_id = $('#category_id').val();
-            // var name        = $('#name').val();
-            // var isbn        = $('#isbn').val();
-            // var image       = $('#image').val();
 
             $('#product_update_btn').click(function (){
                 var formData = new FormData();
@@ -125,18 +114,12 @@
                 // });
 
                 $.ajax({
-                    url         : "{{ route('update.product') }}",
+                    url         : "{{ route('update.product', $products->id) }}",
                     method      : "POST",
                     processData : false,
                     contentType : false,
                     cache       : false,
                     data        : formData,
-                    // author_id    : author_id,
-                    // category_id  : category_id,
-                    // name         : name,
-                    // isbn         : isbn,
-                    // image        : image,
-
                     success     : function (data){
                         var result = JSON.parse(data);
                         if (result.error == 1)
