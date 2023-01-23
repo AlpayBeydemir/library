@@ -1,4 +1,27 @@
 @extends('admin.index')
+
+@section('styles')
+
+    <link href="{{ asset('backend/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+
+    <style>
+        /*Styling preloader*/
+        .preloader{
+            /*
+            Making the preloader floating over other elements.
+            The preloader is visible by default.
+            */
+            /*position: absolute;*/
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+        }
+    </style>
+
+@endsection()
+
 @section('admin')
 
 
@@ -13,18 +36,21 @@
                                 <h3>Edit {{ $products->name }} Product</h3>
                             </div>
                             <div class="card-body">
+                                <div class="preloader"><span class="preloader-js"></span></div>
 
                                 <form id="product_update" enctype="multipart/form-data">
                                     @csrf
 
                                     <div class="mb-3">
-                                        <label for="author_id" class="form-label select-label"> Select Author </label>
-                                        <select class="form-select" name="author_id[]" id="author_id" multiple>
-                                            <option value=""> Select </option>
+                                        <label for="author_id" class="form-label">Select Author</label>
+
+                                        <select name="author_id[]" id="author_id" class="select2 form-control select2-multiple"
+                                                multiple="multiple" data-placeholder="Authors ...">
                                             @foreach($authors as $author)
                                                 <option {{ $author->selected == 1 ? 'selected' : '' }} value="{{ $author->id }}" > {{ $author->name }} </option>
                                             @endforeach
                                         </select>
+
                                     </div>
 
                                     <div class="mb-3">
@@ -94,6 +120,24 @@
         </div>
     </div>
 
+@endsection()
+
+@section('js')
+
+    <script>
+        //after window is loaded completely
+        window.onload = function(){
+            //hide the preloader
+            document.querySelector(".preloader").style.display = "none";
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function (){
 
@@ -139,15 +183,16 @@
 
     <script>
         $(document).ready(function (){
-           $('#image').change(function (e){
-              var reader = new FileReader();
-              reader.onload = function (e){
-                  $('#showImage').attr('src', e.target.result);
-              }
-              reader.readAsDataURL(e.target.files[0]);
-           });
+            $('#image').change(function (e){
+                var reader = new FileReader();
+                reader.onload = function (e){
+                    $('#showImage').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(e.target.files[0]);
+            });
         });
     </script>
 
-@endsection()
+    <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
 
+@endsection

@@ -215,63 +215,56 @@ class ProductController extends Controller
                     $image = $request->file('image');
                     $image_name = date('YmdHi'). '.' . $image->getClientOriginalName();
                     $image_upload = $image->storeAs('uploads', $image_name, 'public');
-//                    $image_upload = $request->file('image')->move(public_path('images'), $image_name);
-
-                    // Update Product Table
-                    $product = Product::find($id);
-
-                    $product->category_id      = $request->category_id;
-                    $product->name             = $request->name;
-                    $product->publisher        = $request->publisher;
-                    $product->publication_year = $request->publication_year;
-                    $product->language         = $request->language;
-                    $product->stock            = $request->stock;
-                    $product->isbn             = $request->isbn;
-                    $product->image            = $image_upload;
-
-                    $product->update();
-
 
                     // Insert Author_product Table
-                    foreach ($request->author_id as $key => $value)
-                    {
-                        $author_product = Author_product::find($id);
-
-                        $author_product->author_id    = $value;
-//                $author_product->product_id   = $product->id;
-
-                        $author_product->update();
-                    }
+//                    foreach ($request->author_id as $key => $value)
+//                    {
+////                        $author_product = Author_product::find($id);
+////
+////                        $author_product->author_id    = $value;
+////                $author_product->product_id   = $product->id;
+//
+////                        $author_product->save();
+//
+//                        $update_author = Author_product::where('product_id', $id)->get();
+//                        dd($update_author);
+//                        if ($update_author){
+//                            $update_author->author_id = $value;
+//                            $update_author->update();
+//                        }
+//                    }
                 }
                 else {
                     throw new \Exception("Please Upload '.jpg', '.jpeg' or '.png' File");
                 }
             }
-            else {
-                // Update Product Table
-                $product = Product::find($id);
 
-                $product->category_id      = $request->category_id;
-                $product->name             = $request->name;
-                $product->publisher        = $request->publisher;
-                $product->publication_year = $request->publication_year;
-                $product->language         = $request->language;
-                $product->stock            = $request->stock;
-                $product->isbn             = $request->isbn;
+            // Update Product Table
+            $product = Product::find($id);
 
-                $product->update();
+            $product->category_id      = $request->category_id;
+            $product->name             = $request->name;
+            $product->publisher        = $request->publisher;
+            $product->publication_year = $request->publication_year;
+            $product->language         = $request->language;
+            $product->stock            = $request->stock;
+            $product->isbn             = $request->isbn;
+            if (isset($image_upload) && !empty($image_upload))
+            {
+                $product->image =  $image_upload;
+            }
+            $product->update();
 
 
-                // Insert Author_product Table
-                foreach ($request->author_id as $key => $value)
-                {
-                    $author_product = Author_product::find($id);
+            // Insert Author_product Table
+            foreach ($request->author_id as $key => $value)
+            {
+                $author_product = Author_product::find($id);
 
-                    $author_product->author_id    = $value;
+                $author_product->author_id    = $value;
 //                $author_product->product_id   = $product->id;
 
-                    $author_product->update();
-                }
+                $author_product->update();
             }
 
             $jsonData = [

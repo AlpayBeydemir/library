@@ -1,8 +1,28 @@
 @extends('admin.index')
+
+@section('styles')
+
+    <link href="{{ asset('backend/assets/libs/select2/css/select2.min.css') }}" rel="stylesheet" type="text/css">
+
+    <style>
+        /*Styling preloader*/
+        .preloader{
+            /*
+            Making the preloader floating over other elements.
+            The preloader is visible by default.
+            */
+            /*position: absolute;*/
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+        }
+    </style>
+
+@endsection()
+
 @section('admin')
-
-
-
     <div class="page-content">
         <div class="container-fluid">
             <div class="row mt-3">
@@ -13,19 +33,33 @@
                                 <h3>Add New Product</h3>
                             </div>
                             <div class="card-body">
-
+                                <div class="preloader"><span class="preloader-js"></span></div>
                                 <form id="product_store" method="POST" action="{{ route('store.product') }}" enctype="multipart/form-data">
                                     @csrf
 
+
                                     <div class="mb-3">
-                                        <label for="author_id" class="form-label select-label"> Select Author </label>
-                                        <select class="form-select" name="author_id[]" id="author_id" multiple>
-                                            <option value=""> Select </option>
-                                                @foreach($authors as $author)
-                                                    <option value="{{ $author->id }}"> {{ $author->name }} </option>
-                                                @endforeach
+                                        <label for="author_id" class="form-label">Select Author</label>
+
+                                        <select name="author_id[]" id="author_id" class="select2 form-control select2-multiple"
+                                                multiple="multiple" data-placeholder="Authors ...">
+                                            @foreach($authors as $author)
+                                                <option value="{{ $author->id }}"> {{ $author->name }} </option>
+                                            @endforeach
                                         </select>
+
                                     </div>
+
+
+{{--                                    <div class="mb-3">--}}
+{{--                                        <label for="author_id" class="form-label select-label"> Select Author </label>--}}
+{{--                                        <select class="form-select" name="author_id[]" id="author_id" multiple>--}}
+{{--                                            <option value=""> Select </option>--}}
+{{--                                                @foreach($authors as $author)--}}
+{{--                                                    <option value="{{ $author->id }}"> {{ $author->name }} </option>--}}
+{{--                                                @endforeach--}}
+{{--                                        </select>--}}
+{{--                                    </div>--}}
 
                                     <div class="mb-3">
                                         <label for="category_id" class="form-label"> Select Category </label>
@@ -112,14 +146,28 @@
 {{--        }--}}
 {{--    </script>--}}
 
+
+
+@endsection()
+
+@section('js')
+
+    <script>
+        //after window is loaded completely
+        window.onload = function(){
+            //hide the preloader
+            document.querySelector(".preloader").style.display = "none";
+        }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.select2').select2();
+        });
+    </script>
+
     <script type="text/javascript">
         $(document).ready(function (){
-
-            // var author_id   = $('#author_id').val();
-            // var category_id = $('#category_id').val();
-            // var name        = $('#name').val();
-            // var isbn        = $('#isbn').val();
-            // var image       = $('#image').val();
 
             $('#product_store_btn').click(function (){
                 var formData = new FormData();
@@ -137,35 +185,33 @@
                 //     }
                 // });
 
-               $.ajax({
-                   url         : "{{ route('store.product') }}",
-                   method      : "POST",
-                   processData : false,
-                   contentType : false,
-                   cache       : false,
-                   data        : formData,
-                       // author_id    : author_id,
-                       // category_id  : category_id,
-                       // name         : name,
-                       // isbn         : isbn,
-                       // image        : image,
+                $.ajax({
+                    url         : "{{ route('store.product') }}",
+                    method      : "POST",
+                    processData : false,
+                    contentType : false,
+                    cache       : false,
+                    data        : formData,
 
-                   success     : function (data){
-                         var result = JSON.parse(data);
-                         if (result.error == 1)
-                         {
-                             toastr.error(result.message);
-                         }
-                         else
-                         {
-                             toastr.success(result.message);
-                             location.href = result.url;
-                         }
-                   }
-               });
+                    success     : function (data){
+                        var result = JSON.parse(data);
+                        if (result.error == 1)
+                        {
+                            toastr.error(result.message);
+                        }
+                        else
+                        {
+                            toastr.success(result.message);
+                            location.href = result.url;
+                        }
+                    }
+                });
             });
         });
+
     </script>
+
+    <script src="{{ asset('backend/assets/libs/select2/js/select2.min.js') }}"></script>
 
 @endsection()
 
