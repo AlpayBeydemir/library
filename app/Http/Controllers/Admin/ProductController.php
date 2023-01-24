@@ -257,15 +257,50 @@ class ProductController extends Controller
 
 
             // Insert Author_product Table
-            foreach ($request->author_id as $key => $value)
+            $authors_input[] = $request->author_id; // edit page inputs
+
+            $authors = [];
+            $early_added_authors = Author_product::where('product_id', $id)->get();
+            foreach ($early_added_authors as $early)
             {
-                $author_product = Author_product::find($id);
-
-                $author_product->author_id    = $value;
-//                $author_product->product_id   = $product->id;
-
-                $author_product->update();
+                $authors[] = $early->author_id; // exist authors
             }
+//            dd($authors);
+
+            // Insert Newly Added Authors
+            foreach ($authors_input as $inputValues)
+            {
+                if (!in_array($inputValues, $authors))
+                {
+                    $new_author_add = new Author_product();
+
+                    $new_author_add->author_id   = $inputValues->author_id;
+                    $new_author_add->product_id  = $product->id;
+
+                    $new_author_add->save();
+                }
+            }
+
+
+            // Delete Added Author Data
+            foreach ($authors as $delete_author)
+            {
+                if (!in_array($delete_author, $authors))
+                {
+                    Author_product::where('product_id', $id)->where('author_id', $delete_author->author_id)->delete();
+                }
+            }
+
+
+//            foreach ($request->author_id as $key => $value)
+//            {
+//                $author_product = Author_product::where('product_id', $id)->get();
+//                if ($author_product){
+//                    $author_product->update([
+//                        $author_product->author_id = $value
+//                    ]);
+//                }
+//            }
 
             $jsonData = [
                 "error" => 0,
