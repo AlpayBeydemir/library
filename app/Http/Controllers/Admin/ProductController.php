@@ -285,7 +285,7 @@ class ProductController extends Controller
             // Delete Added Author Data
             foreach ($authors as $delete_author)
             {
-                if (!in_array($delete_author, $authors))
+                if (!in_array($delete_author, $authors_input))
                 {
                     Author_product::where('product_id', $id)->where('author_id', $delete_author->author_id)->delete();
                 }
