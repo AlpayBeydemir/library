@@ -257,7 +257,7 @@ class ProductController extends Controller
 
 
             // Insert Author_product Table
-            $authors_input[] = $request->author_id; // edit page inputs
+            $authors_input[] = $request->author_id; // edit page author inputs
 
             $authors = [];
             $early_added_authors = Author_product::where('product_id', $id)->get();
@@ -274,7 +274,7 @@ class ProductController extends Controller
                 {
                     $new_author_add = new Author_product();
 
-                    $new_author_add->author_id   = $inputValues->author_id;
+                    $new_author_add->author_id   = $inputValues;
                     $new_author_add->product_id  = $product->id;
 
                     $new_author_add->save();
@@ -287,7 +287,7 @@ class ProductController extends Controller
             {
                 if (!in_array($delete_author, $authors_input))
                 {
-                    Author_product::where('product_id', $id)->where('author_id', $delete_author->author_id)->delete();
+                    Author_product::where('product_id', $id)->where('author_id', $delete_author)->delete();
                 }
             }
 

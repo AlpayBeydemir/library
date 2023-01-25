@@ -80,7 +80,7 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
 <!--Sweet Alert / Code Js-->
-<script src="{{ asset('backend/assets/js/code.js') }}"></script>
+{{--<script src="{{ asset('backend/assets/js/code.js') }}"></script>--}}
 
 @yield('js')
 
