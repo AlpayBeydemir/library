@@ -35,7 +35,7 @@
                             <td>{{ $product->updated_at }}</td>
                             <td>
                                 <a href="{{ route('edit.product', $product->id) }}" class="btn btn-info" title="Edit Product"> <i class="fas fa-edit"></i> </a>
-                                <a href="{{ route('delete.author', $product->id) }}" class="btn btn-danger" title="Delete author"> <i class="fas fa-trash-alt"></i> </a>
+                                <button class="btn btn-danger" title="Delete Product" onclick="deleteProduct({{  $product->id }})"> <i class="fas fa-trash-alt"></i> </button>
                             </td>
                         </tr>
                     @endforeach
@@ -46,4 +46,8 @@
 
 @endsection()
 
+@section('js')
 
+    $.ajax
+
+@endsection

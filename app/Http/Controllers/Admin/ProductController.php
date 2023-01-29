@@ -268,7 +268,7 @@ class ProductController extends Controller
 //            dd($authors);
 
             // Insert Newly Added Authors
-            foreach ($authors_input as $inputValues)
+            foreach ($request->author_id as $inputValues)
             {
                 if (!in_array($inputValues, $authors))
                 {
@@ -285,7 +285,7 @@ class ProductController extends Controller
             // Delete Added Author Data
             foreach ($authors as $delete_author)
             {
-                if (!in_array($delete_author, $authors_input))
+                if (!in_array($delete_author, $request->author_id))
                 {
                     Author_product::where('product_id', $id)->where('author_id', $delete_author)->delete();
                 }
@@ -320,5 +320,10 @@ class ProductController extends Controller
 
             echo json_encode($jsonData);
         }
+    }
+
+    public function DeleteProduct($id)
+    {
+
     }
 }
