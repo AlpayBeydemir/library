@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Frontend\CustomAuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,7 @@ use App\Http\Controllers\Admin\ProductController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('frontend.index');
 });
 
 // All Dashboard Routes
@@ -57,6 +58,22 @@ Route::controller(ProductController::class)->group(function (){
    Route::post('/store/product','StoreProduct')->name('store.product');
    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');
    Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
+//   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
+
+});
+
+
+// Frontend Routes //
+
+// All Custom Auth Routes
+Route::controller(CustomAuthController::class)->group(function (){
+    Route::get('/login','index')->name('login');
+    Route::get('/registration','registration')->name('register-user');
+    Route::get('/customRegistration','customRegistration')->name('register.custom');
+//    Route::get('/add/product','AddProduct')->name('add.product');
+//    Route::post('/store/product','StoreProduct')->name('store.product');
+//    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');
+//    Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
 
 });
