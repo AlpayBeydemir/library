@@ -69,7 +69,7 @@ Route::controller(ProductController::class)->group(function (){
 Route::controller(CustomAuthController::class)->group(function (){
     Route::get('/login','index')->name('login');
     Route::get('/registration','registration')->name('register-user');
-    Route::get('/customRegistration','customRegistration')->name('register.custom');
+    Route::post('/customRegistration','customRegistration')->name('register.custom');
 //    Route::get('/add/product','AddProduct')->name('add.product');
 //    Route::post('/store/product','StoreProduct')->name('store.product');
 //    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');

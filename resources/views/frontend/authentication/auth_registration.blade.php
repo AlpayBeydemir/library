@@ -41,38 +41,30 @@
                 <h4 class="text-muted text-center font-size-18"><b>Register</b></h4>
 
                 <div class="p-3">
-                    <form method="post" class="form-horizontal mt-3" action="{{ route('register.custom') }}">
+                    <form class="form-horizontal mt-3" method="post" name="form_login" id="form_login">
+                        @csrf
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
-                                <input class="form-control" type="email" required="" placeholder="Email">
+                                <input class="form-control" name="email" id="email" type="email" required="" placeholder="Email">
                             </div>
                         </div>
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
-                                <input class="form-control" type="text" required="" placeholder="Username">
+                                <input class="form-control" name="name" id="name" type="text" required="" placeholder="Username">
                             </div>
                         </div>
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
-                                <input class="form-control" type="password" required="" placeholder="Password">
-                            </div>
-                        </div>
-
-                        <div class="form-group mb-3 row">
-                            <div class="col-12">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                                    <label class="form-label ms-1 fw-normal" for="customCheck1">I accept <a href="#" class="text-muted">Terms and Conditions</a></label>
-                                </div>
+                                <input class="form-control" name="password" id="password" type="password" required="" placeholder="Password">
                             </div>
                         </div>
 
                         <div class="form-group text-center row mt-3 pt-1">
                             <div class="col-12">
-                                <button class="btn btn-info w-100 waves-effect waves-light" type="submit">Register</button>
+                                <button class="btn btn-info w-100 waves-effect waves-light" type="button" id="register">Register</button>
                             </div>
                         </div>
 
@@ -102,6 +94,41 @@
 <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
 
 <script src="{{ asset('backend/assets/js/app.js') }}"></script>
+
+<script>
+    $(document).ready(function (){
+        $('#register').click(function (){
+           var formData = new FormData();
+           var user_info = $('#register').serializeArray();
+
+            $.each(user_info, function (key, el){
+                formData.append(el.name, el.value);
+            })
+
+            $.ajax({
+                url           : "{{ route('register.custom') }}",
+                method        : "POST",
+                processData   : false,
+                contentType   : false,
+                cache         : false,
+                data          : formData,
+
+                success : function (data){
+                    var result = JSON.parse(data);
+                    if (result.error == 1)
+                    {
+                        toastr.error(result.message);
+                    }
+                    else
+                    {
+                        toastr.success(result.message);
+                        location.href = result.url;
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 
