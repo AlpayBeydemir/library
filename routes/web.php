@@ -23,7 +23,7 @@ Route::get('/', function () {
 
 // All Dashboard Routes
 Route::controller(DashboardController::class)->group(function (){
-   Route::get('/dashboard','index')->name('dashboard');
+   Route::get('/admin','index')->name('admin');
 
 
 });
@@ -70,7 +70,8 @@ Route::controller(CustomAuthController::class)->group(function (){
     Route::get('/login','index')->name('login');
     Route::get('/registration','registration')->name('register-user');
     Route::post('/customRegistration','customRegistration')->name('register.custom');
-//    Route::get('/add/product','AddProduct')->name('add.product');
+    Route::post('/customLogin','customLogin')->name('login.custom');
+    Route::get('/library','Library')->name('library');
 //    Route::post('/store/product','StoreProduct')->name('store.product');
 //    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');
 //    Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
