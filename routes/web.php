@@ -18,12 +18,12 @@ use App\Http\Controllers\Frontend\CustomAuthController;
 */
 
 Route::get('/', function () {
-    return view('frontend.index');
+    return view('frontend.authentication.auth_login');
 });
 
 // All Dashboard Routes
 Route::controller(DashboardController::class)->group(function (){
-   Route::get('/admin','index')->name('admin');
+   Route::get('/admin','index')->name('admin')->middleware( 'user_check:manager:admin');
 
 
 });
@@ -31,7 +31,7 @@ Route::controller(DashboardController::class)->group(function (){
 // All Category Routes
 Route::controller(CategoryController::class)->group(function (){
    Route::get('/category','index')->name('category');
-   Route::get('/add/category','AddCategory')->name('add.category');
+   Route::get('/add/category','AddCategory')->name('add.category')->middleware( 'user_check:manager, admin');
    Route::post('/store/category','StoreCategory')->name('store.category');
    Route::get('/edit/category/{id}','EditCategory')->name('edit.category');
    Route::post('/update/category/{id}','UpdateCategory')->name('update.category');
@@ -70,7 +70,7 @@ Route::controller(CustomAuthController::class)->group(function (){
     Route::get('/login','index')->name('login');
     Route::get('/registration','registration')->name('register-user');
     Route::post('/customRegistration','customRegistration')->name('register.custom');
-    Route::post('/customLogin','customLogin')->name('login.custom');
+    Route::post('/customLogin','customLogin')->name('customLogin');
     Route::get('/library','Library')->name('library');
 //    Route::post('/store/product','StoreProduct')->name('store.product');
 //    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');

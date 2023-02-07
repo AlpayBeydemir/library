@@ -23,7 +23,7 @@
                             </ul>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('login') }}">Log In</a>
+                            <a class="nav-link active" aria-current="page" href="#">My Profile</a>
                         </li>
                     </ul>
                 </div>

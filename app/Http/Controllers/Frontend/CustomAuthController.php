@@ -25,6 +25,7 @@ class CustomAuthController extends Controller
     public function customRegistration(Request $request)
     {
         try {
+//            dd($request);
             if (!isset($request->email) || empty($request->email)){
                 throw new \Exception("Please Enter Email");
             }
@@ -64,43 +65,29 @@ class CustomAuthController extends Controller
 
     public function customLogin(Request $request)
     {
-        try {
+        $credentials = $request->validate([
+            "email"     => ['required', 'email'],
+            "password" => ['required'],
+        ]);
 
-            if (!isset($request->name) || empty($request->name)){
-                throw new \Exception("Please Enter Name");
-            }
-            if (!isset($request->password) || empty($request->password)){
-                throw new \Exception("Please Enter Password");
-            }
-
-            $credentials = [
-                "name"     => $request->name,
-                "password" => $request->password,
-            ];
-
-            if (!Auth::attempt($credentials)){
-                throw new \Exception("The provided credentials do not match our records.");
-            }
+        if (Auth::attempt($credentials)){
 
             $request->session()->regenerate();
 
-            $jsonData = [
-                "error"     => 0,
-                "message"   => "You Have Log In Successfuly",
-                "url"       => route("library")
-            ];
+            if (Auth::user()->type == "admin" || Auth::user()->type == "manager" )
+                return redirect()->intended('/admin');
 
-            echo json_encode($jsonData);
 
-        }catch (\Exception $e){
+            if (Auth::user()->type == "user")
+                return redirect()->intended('/library');
 
-            $jsonData = [
-                "error"    => 1,
-                "message"  => $e->getMessage()
-            ];
-
-            echo json_encode($jsonData);
         }
+
+        return back()->withErrors([
+            'email' => 'The email does not match.',
+            'password' => 'The password does not match.',
+        ]);
+
     }
 
     public function Library()

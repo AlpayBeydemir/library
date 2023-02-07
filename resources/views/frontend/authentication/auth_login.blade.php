@@ -41,24 +41,30 @@
                 <h4 class="text-muted text-center font-size-18"><b>Sign In</b></h4>
 
                 <div class="p-3">
-                    <form method="post" class="form-horizontal mt-3" name="form_login" id="form_login">
+                    <form method="post" action="{{ route('customLogin') }}" class="form-horizontal mt-3" name="form_login" id="form_login">
                         @csrf
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
-                                <input class="form-control" name="name" id="name" type="text" required="" placeholder="Username">
+                                <input class="form-control" name="email" id="email" type="text" required="" placeholder="Username">
+                                @if ($errors->has('email'))
+                                    <span class="text-danger">{{ $errors->first('email') }}</span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
                                 <input class="form-control" name="password" id="password" type="password" required="" placeholder="Password">
+                                @if ($errors->has('password'))
+                                    <span class="text-danger">{{ $errors->first('password') }}</span>
+                                @endif
                             </div>
                         </div>
 
                         <div class="form-group mb-3 text-center row mt-3 pt-1">
                             <div class="col-12">
-                                <button id="login" class="btn btn-info w-100 waves-effect waves-light" type="button">Log In</button>
+                                <button id="login" class="btn btn-info w-100 waves-effect waves-light" type="submit">Log In</button>
                             </div>
                         </div>
 
@@ -93,38 +99,38 @@
 <script src="{{ asset('backend/assets/js/app.js') }}"></script>
 
 <script>
-    $(document).ready(function (){
-        $('#login').click(function (){
-            var formData = new FormData();
-            var user_info = $('#login').serializeArray();
+    {{--$(document).ready(function (){--}}
+    {{--    $('#login').click(function (){--}}
+    {{--        var formData = new FormData();--}}
+    {{--        var user_info = $('#form_login').serializeArray();--}}
 
-            $.each(user_info, function (key, el){
-                formData.append(el.name, el.value);
-            })
+    {{--        $.each(user_info, function (key, el){--}}
+    {{--            formData.append(el.name, el.value);--}}
+    {{--        })--}}
 
-            $.ajax({
-                url           : "{{ route('login.custom') }}",
-                method        : "POST",
-                processData   : false,
-                contentType   : false,
-                cache         : false,
-                data          : formData,
+    {{--        $.ajax({--}}
+    {{--            url           : "{{ route('login.custom') }}",--}}
+    {{--            method        : "POST",--}}
+    {{--            processData   : false,--}}
+    {{--            contentType   : false,--}}
+    {{--            cache         : false,--}}
+    {{--            data          : formData,--}}
 
-                success : function (data){
-                    var result = JSON.parse(data);
-                    if (result.error == 1)
-                    {
-                        toastr.error(result.message);
-                    }
-                    else
-                    {
-                        toastr.success(result.message);
-                        location.href = result.url;
-                    }
-                }
-            });
-        });
-    });
+    {{--            success : function (data){--}}
+    {{--                var result = JSON.parse(data);--}}
+    {{--                if (result.error == 1)--}}
+    {{--                {--}}
+    {{--                    toastr.error(result.message);--}}
+    {{--                }--}}
+    {{--                else--}}
+    {{--                {--}}
+    {{--                    toastr.success(result.message);--}}
+    {{--                    location.href = result.url;--}}
+    {{--                }--}}
+    {{--            }--}}
+    {{--        });--}}
+    {{--    });--}}
+    {{--});--}}
 </script>
 
 

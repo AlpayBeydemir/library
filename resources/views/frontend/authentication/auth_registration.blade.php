@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesdesign" name="author" />
+{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
@@ -41,7 +42,7 @@
                 <h4 class="text-muted text-center font-size-18"><b>Register</b></h4>
 
                 <div class="p-3">
-                    <form class="form-horizontal mt-3" method="post" name="form_register" id="form_register">
+                    <form class="form-horizontal mt-3" name="form_register" id="form_register">
                         @csrf
 
                         <div class="form-group mb-3 row">
@@ -64,7 +65,7 @@
 
                         <div class="form-group text-center row mt-3 pt-1">
                             <div class="col-12">
-                                <button class="btn btn-info w-100 waves-effect waves-light" type="button" id="register">Register</button>
+                                <button class="btn btn-info w-100 waves-effect waves-light" type="button" id="register_btn">Register</button>
                             </div>
                         </div>
 
@@ -97,13 +98,19 @@
 
 <script>
     $(document).ready(function (){
-        $('#register').click(function (){
+        $('#register_btn').click(function (){
            var formData = new FormData();
-           var user_info = $('#register').serializeArray();
+           var user_info = $('#form_register').serializeArray();
 
             $.each(user_info, function (key, el){
                 formData.append(el.name, el.value);
-            })
+            });
+
+            // $.ajaxSetup({
+            //     headers: {
+            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            //     }
+            // });
 
             $.ajax({
                 url           : "{{ route('register.custom') }}",
