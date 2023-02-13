@@ -46,7 +46,7 @@
 
                         <div class="form-group mb-3 row">
                             <div class="col-12">
-                                <input class="form-control" name="email" id="email" type="text" required="" placeholder="Username">
+                                <input class="form-control" name="email" id="email" type="text" required="" placeholder="Email">
                                 @if ($errors->has('email'))
                                     <span class="text-danger">{{ $errors->first('email') }}</span>
                                 @endif

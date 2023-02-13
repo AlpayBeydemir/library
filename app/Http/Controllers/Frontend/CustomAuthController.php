@@ -65,9 +65,10 @@ class CustomAuthController extends Controller
 
     public function customLogin(Request $request)
     {
+
         $credentials = $request->validate([
             "email"     => ['required', 'email'],
-            "password" => ['required'],
+            "password"  => ['required'],
         ]);
 
         if (Auth::attempt($credentials)){

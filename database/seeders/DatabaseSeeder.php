@@ -19,9 +19,23 @@ class DatabaseSeeder extends Seeder
 
          \App\Models\User::factory()->create([
              'name' => 'Test User',
-             'email' => 'test@example.com',
-             'password' => Hash::make('123'),
+             'email' => 'test@user.com',
+             'password' => Hash::make('1'),
+             'type' => 0
+         ])
+
+         ;\App\Models\User::factory()->create([
+             'name' => 'Test Admin',
+             'email' => 'test@admin.com',
+             'password' => Hash::make('1'),
              'type' => 1
+         ])
+
+        ;\App\Models\User::factory()->create([
+             'name' => 'Test Manager',
+             'email' => 'test@manager.com',
+             'password' => Hash::make('1'),
+             'type' => 2
          ]);
     }
 }
