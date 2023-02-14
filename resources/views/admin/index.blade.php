@@ -30,6 +30,9 @@
     <!-- App Css-->
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
+    <!-- Custom Css-->
+    <link rel="stylesheet" href="{{ asset('backend/assets/css/custom.css') }}" type="text/css">
+
     @yield('styles')
 
 </head>
@@ -40,7 +43,6 @@
 
 <!-- Begin page -->
 <div id="layout-wrapper">
-
 
     <!--Header Start-->
     @include('admin.body.header')

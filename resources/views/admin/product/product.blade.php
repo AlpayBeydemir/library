@@ -1,45 +1,47 @@
 @extends('admin.index')
 @section('admin')
 
-    <div class="page-content mt-5">
-        <div class="container-fluid">
-            <div class="row">
-                <table class="table table-striped table-bordered text-center">
-                    <tr>
-                        <th>Number</th>
-                        <th>Image</th>
-                        <th>Book Name</th>
-                        <th>Publisher</th>
-                        <th>Category</th>
-                        <th>Authors</th>
-                        <th>Stock</th>
-                        <th>Created At</th>
-                        <th>Updated At</th>
-                        <th>Action</th>
-                    </tr>
-                    @php($i = 1)
-                    @foreach($products as $product)
+    <div class="main-content">
+        <div class="page-content mt-5">
+            <div class="container-fluid">
+                <div class="row">
+                    <table class="table table-striped table-bordered text-center">
                         <tr>
-                            <td>{{ $i++ }}</td>
-                            <td><img src="{{ Storage::url($product->image) }}" style="width: 60px; height: 50px;"></td>
-                            <td>{{ $product->name }}</td>
-                            <td>{{ $product->publisher }}</td>
-                            <td>{{ $product->category->name }}</td>
+                            <th>Number</th>
+                            <th>Image</th>
+                            <th>Book Name</th>
+                            <th>Publisher</th>
+                            <th>Category</th>
+                            <th>Authors</th>
+                            <th>Stock</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Action</th>
+                        </tr>
+                        @php($i = 1)
+                        @foreach($products as $product)
+                            <tr>
+                                <td>{{ $i++ }}</td>
+                                <td><img src="{{ Storage::url($product->image) }}" style="width: 60px; height: 50px;"></td>
+                                <td>{{ $product->name }}</td>
+                                <td>{{ $product->publisher }}</td>
+                                <td>{{ $product->category->name }}</td>
                                 <td>
                                     @foreach($product->author as $auth)
-                                    <li>{{ $auth->name }}</li>
+                                        <li>{{ $auth->name }}</li>
                                     @endforeach
                                 </td>
-                            <td>{{ $product->stock }}</td>
-                            <td>{{ $product->created_at }}</td>
-                            <td>{{ $product->updated_at }}</td>
-                            <td>
-                                <a href="{{ route('edit.product', $product->id) }}" class="btn btn-info" title="Edit Product"> <i class="fas fa-edit"></i> </a>
-                                <button class="btn btn-danger" title="Delete Product" onclick="deleteProduct({{  $product->id }})"> <i class="fas fa-trash-alt"></i> </button>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                                <td>{{ $product->stock }}</td>
+                                <td>{{ $product->created_at }}</td>
+                                <td>{{ $product->updated_at }}</td>
+                                <td>
+                                    <a href="{{ route('edit.product', $product->id) }}" class="btn btn-info" title="Edit Product"> <i class="fas fa-edit"></i> </a>
+                                    <button class="btn btn-danger" title="Delete Product" onclick="deleteProduct({{  $product->id }})"> <i class="fas fa-trash-alt"></i> </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -47,7 +49,5 @@
 @endsection()
 
 @section('js')
-
-    $.ajax
 
 @endsection

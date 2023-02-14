@@ -1,29 +1,31 @@
 @extends('admin.index')
 @section('admin')
 
-    <div class="page-content">
-        <div class="container-fluid">
-            <div class="row mt-3">
-                <div class="d-flex justify-content-center">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Update Category</h3>
-                            </div>
-                            <div class="card-body">
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-header-text">Update Category</h3>
+                                </div>
+                                <div class="card-body">
 
-                                <form method="post" action="{{ route('update.category',$category->id) }}">
-                                    @csrf
+                                    <form method="post" action="{{ route('update.category',$category->id) }}">
+                                        @csrf
 
-                                    <div class="mb-3">
-                                        <label for="name" class="form-label">Category Name</label>
-                                        <input type="text" class="form-control" name="name" id="name" value="{{ $category->name }}">
-                                    </div>
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Category Name</label>
+                                            <input type="text" class="form-control" name="name" id="name" value="{{ $category->name }}">
+                                        </div>
 
-                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
 
-                                </form>
+                                    </form>
 
+                                </div>
                             </div>
                         </div>
                     </div>

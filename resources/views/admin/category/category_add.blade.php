@@ -1,15 +1,16 @@
 @extends('admin.index')
 @section('admin')
 
-    <div class="page-content">
-        <div class="container-fluid">
-            <div class="row mt-3">
-                <div class="d-flex justify-content-center">
-                    <div class="col-md-6">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>Add New Category</h3>
-                            </div>
+    <div class="main-content">
+        <div class="page-content">
+            <div class="container-fluid">
+                <div class="row mt-3">
+                    <div class="d-flex justify-content-center">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-header-text">Add New Category</h3>
+                                </div>
                                 <div class="card-body">
 
                                     <form method="post" action="{{ route('store.category') }}">
@@ -25,6 +26,7 @@
                                     </form>
 
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>

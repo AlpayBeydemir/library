@@ -31,7 +31,7 @@ Route::controller(DashboardController::class)->group(function (){
 // All Category Routes
 Route::controller(CategoryController::class)->group(function (){
    Route::get('/category','index')->name('category');
-   Route::get('/add/category','AddCategory')->name('add.category')->middleware( 'user_check:manager, admin');
+   Route::get('/add/category','AddCategory')->name('add.category');
    Route::post('/store/category','StoreCategory')->name('store.category');
    Route::get('/edit/category/{id}','EditCategory')->name('edit.category');
    Route::post('/update/category/{id}','UpdateCategory')->name('update.category');
