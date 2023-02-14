@@ -72,7 +72,7 @@ class AuthorController extends Controller
             else {
                 $author = Author::find($id);
 
-                $author->name       = $request->name;
+                $author->name = $request->name;
 
                 $author->update();
 

@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Session;
 use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 
 class CustomAuthController extends Controller
@@ -100,5 +98,13 @@ class CustomAuthController extends Controller
         {
             return view('frontend.index');
         }
+    }
+
+    public function Logout()
+    {
+        Session::flush();
+        Auth::logout();
+
+        return redirect('/login');
     }
 }

@@ -1,11 +1,12 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Frontend\CustomAuthController;
+use App\Http\Controllers\CustomAuthController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -72,8 +73,7 @@ Route::controller(CustomAuthController::class)->group(function (){
     Route::post('/customRegistration','customRegistration')->name('register.custom');
     Route::post('/customLogin','customLogin')->name('customLogin');
     Route::get('/library','Library')->name('library');
-//    Route::post('/store/product','StoreProduct')->name('store.product');
-//    Route::get('/edit/product/{id}','EditProduct')->name('edit.product');
+    Route::get('/logout','Logout')->name('logout');
 //    Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
 
