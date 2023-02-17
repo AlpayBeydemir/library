@@ -111,7 +111,6 @@ class ProductController extends Controller
             $product->save();
 //dd($product);
 
-            // Insert Author_product Table
 
             foreach ($request->author_id as $key => $value)
             {
