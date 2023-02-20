@@ -48,11 +48,13 @@
 <div id="layout-wrapper">
 
     <!--Header Start-->
-    @include('admin.body.header')
+{{--    @include('admin.body.header')--}}
+    <x-header />
     <!--Header End-->
 
     <!-- ========== Left Sidebar Start ========== -->
-    @include('admin.body.left_sidebar')
+{{--    @include('admin.body.left_sidebar')--}}
+    <x-sidebar />
     <!-- Left Sidebar End -->
 
     <!--Main Content Start-->
@@ -60,7 +62,8 @@
     <!--Main Content End-->
 
     <!--Footer Start-->
-    @include('admin.body.footer')
+{{--    @include('admin.body.footer')--}}
+    <x-footer />
     <!--Footer End-->
 
 </div>
@@ -79,26 +82,26 @@
 
 <!--Toastr Alert Start-->
 <script>
-{{--    @if(Session::has('message'))--}}
-{{--    var type = "{{ Session::get('alert-type','info') }}"--}}
-{{--    switch(type){--}}
-{{--        case 'info':--}}
-{{--            toastr.info(" {{ Session::get('message') }} ");--}}
-{{--            break;--}}
+    @if(Session::has('message'))
+    var type = "{{ Session::get('alert-type','info') }}"
+    switch(type){
+        case 'info':
+            toastr.info(" {{ Session::get('message') }} ");
+            break;
 
-{{--        case 'success':--}}
-{{--            toastr.success(" {{ Session::get('message') }} ");--}}
-{{--            break;--}}
+        case 'success':
+            toastr.success(" {{ Session::get('message') }} ");
+            break;
 
-{{--        case 'warning':--}}
-{{--            toastr.warning(" {{ Session::get('message') }} ");--}}
-{{--            break;--}}
+        case 'warning':
+            toastr.warning(" {{ Session::get('message') }} ");
+            break;
 
-{{--        case 'error':--}}
-{{--            toastr.error(" {{ Session::get('message') }} ");--}}
-{{--            break;--}}
-{{--    }--}}
-{{--    @endif--}}
+        case 'error':
+            toastr.error(" {{ Session::get('message') }} ");
+            break;
+    }
+    @endif
 </script>
 <!--Toastr Alert End-->
 

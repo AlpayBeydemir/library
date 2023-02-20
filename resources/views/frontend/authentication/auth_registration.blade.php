@@ -106,12 +106,6 @@
                 formData.append(el.name, el.value);
             });
 
-            // $.ajaxSetup({
-            //     headers: {
-            //         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            //     }
-            // });
-
             $.ajax({
                 url           : "{{ route('register.custom') }}",
                 method        : "POST",

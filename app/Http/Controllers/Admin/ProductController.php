@@ -93,7 +93,6 @@ class ProductController extends Controller
 //                }
 //            }
 
-
 //dd($request);
 
             // Insert Product Table
@@ -111,7 +110,6 @@ class ProductController extends Controller
             $product->save();
 //dd($product);
 
-
             foreach ($request->author_id as $key => $value)
             {
                 $author_product_new = new Author_product();
@@ -121,7 +119,6 @@ class ProductController extends Controller
 
                 $author_product_new->save();
              }
-
 
             $jsonData = [
               "error" => 0,
