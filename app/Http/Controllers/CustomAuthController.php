@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
 
@@ -38,7 +39,7 @@ class CustomAuthController extends Controller
 
             $user->email     = $request->email;
             $user->name      = $request->name;
-            $user->password  = $request->password;
+            $user->password  = Hash::make($request->password);
 
             $user->save();
 
@@ -63,14 +64,12 @@ class CustomAuthController extends Controller
 
     public function customLogin(Request $request)
     {
-
         $credentials = $request->validate([
             "email"     => ['required', 'email'],
             "password"  => ['required'],
         ]);
 
         if (Auth::attempt($credentials)){
-
             $request->session()->regenerate();
 
             if (Auth::user()->type == "admin" || Auth::user()->type == "manager" )
@@ -105,6 +104,6 @@ class CustomAuthController extends Controller
         Session::flush();
         Auth::logout();
 
-        return redirect('/login');
+        return redirect()->route('login');
     }
 }
