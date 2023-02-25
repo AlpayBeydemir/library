@@ -13,10 +13,15 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('backend/assets/images/favicon.ico') }}">
 
+    <!--Toastr Alert-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"/>
+
     <!-- Bootstrap Css -->
     <link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+
     <!-- Icons Css -->
     <link href="{{ asset('backend/assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+
     <!-- App Css-->
     <link href="{{ asset('backend/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
 
@@ -96,6 +101,12 @@
 <script src="{{ asset('backend/assets/libs/simplebar/simplebar.min.js') }}"></script>
 <script src="{{ asset('backend/assets/libs/node-waves/waves.min.js') }}"></script>
 
+<!--Ajax Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+<!--Toastr Alert Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
 <script src="{{ asset('backend/assets/js/app.js') }}"></script>
 
 <script>
@@ -136,6 +147,6 @@
 
 </body>
 
-<!-- Mirrored from themesdesign.in/upcube/layouts/auth-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 12 Apr 2022 07:34:29 GMT -->
+
 </html>
 

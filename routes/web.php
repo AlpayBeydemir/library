@@ -64,8 +64,6 @@ Route::controller(ProductController::class)->group(function (){
 });
 
 
-// Frontend Routes //
-
 // All Custom Auth Routes
 Route::controller(CustomAuthController::class)->group(function (){
     Route::get('/login','index')->name('login');
@@ -73,7 +71,7 @@ Route::controller(CustomAuthController::class)->group(function (){
     Route::post('/customRegistration','customRegistration')->name('register.custom');
     Route::post('/customLogin','customLogin')->name('customLogin');
     Route::get('/library','Library')->name('library');
-    Route::get('/logout','Logout')->name('logout');
+    Route::post('/logout','Logout')->name('logout');
 //    Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
 
