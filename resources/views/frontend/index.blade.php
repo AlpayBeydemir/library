@@ -20,7 +20,7 @@
 
 <body>
 
-<div class="container">
+
 
     <!--Header Start-->
     @include('frontend.body.header')
@@ -28,7 +28,7 @@
 
 
     <!--Main Content Start-->
-    @yield('frontend')
+    @yield('library')
     <!--Main Content End-->
 
 
@@ -36,7 +36,7 @@
     @include('frontend.body.footer')
     <!--Header End-->
 
-</div>
+
 
 
 <!--Toastr Alert Start-->

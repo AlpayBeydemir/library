@@ -1,6 +1,7 @@
 @extends('frontend.index')
-@section('frontend')
 
-    Frontend Content Sayfası
+@section('library')
+
+    Library Content Sayfası
 
 @endsection()
