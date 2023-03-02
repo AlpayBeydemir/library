@@ -99,7 +99,7 @@ class CustomAuthController extends Controller
         }
     }
 
-    public function Logout(Request $request)
+    public function Logout()
     {
         Session::flush();
         Auth::logout();
