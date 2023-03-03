@@ -95,7 +95,7 @@ class CustomAuthController extends Controller
         }
         else
         {
-            return view('frontend.index');
+            return view('frontend.home');
         }
     }
 

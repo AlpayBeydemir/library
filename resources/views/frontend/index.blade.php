@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title> Admin Dashboard </title>
 
-
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!--Toastr Alert-->
@@ -15,6 +13,9 @@
     <!--Font Awesome Icons-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
 
+    <!--Custom Css-->
+    <link rel="stylesheet" href="{{ asset('frontend/assets/css/custom.css') }}">
+
     @yield('styles')
 </head>
 
@@ -22,46 +23,47 @@
 
 
 
-    <!--Header Start-->
-    @include('frontend.body.header')
-    <!--Header End-->
+        <!--Header Start-->
+        @include('frontend.body.header')
+        <!--Header End-->
 
 
-    <!--Main Content Start-->
-    @yield('library')
-    <!--Main Content End-->
+        <!--Main Content Start-->
+        @yield('content')
+        <!--Main Content End-->
 
 
-    <!--Header Start-->
-    @include('frontend.body.footer')
-    <!--Header End-->
+        <!--Footer Start-->
+        @include('frontend.body.footer')
+        <!--Footer End-->
 
 
-
+<!--Toastr Alert Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!--Toastr Alert Start-->
-<script>
-    @if(Session::has('message'))
-    var type = "{{ Session::get('alert-type','info') }}"
-    switch(type){
-        case 'info':
-            toastr.info(" {{ Session::get('message') }} ");
-            break;
+{{--<script>--}}
+{{--    @if(Session::has('message'))--}}
+{{--    var type = "{{ Session::get('alert-type','info') }}"--}}
+{{--    switch(type){--}}
+{{--        case 'info':--}}
+{{--            toastr.info(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'success':
-            toastr.success(" {{ Session::get('message') }} ");
-            break;
+{{--        case 'success':--}}
+{{--            toastr.success(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'warning':
-            toastr.warning(" {{ Session::get('message') }} ");
-            break;
+{{--        case 'warning':--}}
+{{--            toastr.warning(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'error':
-            toastr.error(" {{ Session::get('message') }} ");
-            break;
-    }
-    @endif
-</script>
+{{--        case 'error':--}}
+{{--            toastr.error(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
+{{--    }--}}
+{{--    @endif--}}
+{{--</script>--}}
 <!--Toastr Alert End-->
 
 <!--JQuery-->
@@ -72,9 +74,6 @@
 
 <!--Ajax Js-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-<!--Toastr Alert Js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 <!--Sweet Alert-->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>

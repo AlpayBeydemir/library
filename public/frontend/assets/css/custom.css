@@ -1,0 +1,24 @@
+.event-header{
+    background-color: #006072;
+    height: 3rem;
+}
+
+.event-body {
+    height: 3.25rem;
+    text-align: center;
+}
+
+.event-body-span{
+    color: #474747;
+    font-size: 1.5rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.event-header-span{
+    display: inline-block;
+    color: white;
+    height: 1.25rem;
+    text-align: center;
+    line-height: 1;
+}
