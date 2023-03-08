@@ -32,26 +32,60 @@
                     </button>
                 </div>
             </div>
+
             <div class="col-lg-4">
                 <h4>Featured Events ></h4>
 
-                <div class="col-lg-2">
-                    <div class="featured-events">
-                        <div class="card text-center" style="width: 5rem;">
-                            <div class="card-header event-header">
-                                <span class="event-header-span">March</span>
-                            </div>
-                            <div class="card-body event-body">
-                                <span class="event-body-span">3</span>
-                            </div>
+                <div class="featured-events">
+                    <div class="card text-center" style="width: 5rem; float: left; margin-right: 20px;">
+                        <div class="card-header event-header">
+                            <span class="event-header-span">March</span>
+                        </div>
+                        <div class="card-body event-body">
+                            <h3>3</h3>
+{{--                            <span class="event-body-span">3</span>--}}
+                        </div>
+                    </div>
+                    <div class="event-info">
+                        <a href=""><h6>Buying vs. Leasing a Car: Which is Right for You?</h6></a>
+                        <div>
+                            <span class="event-date">Mar 8th | 10:30am - 11:30am</span>
+                        </div>
+                        <div>
+                            <span class="event-location">Central Library in Copley Square</span>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-lg-2">
-                    <label for="">Citizenship Class</label>
-                </div>
+            </div>
 
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="get-card-info" style="display: flex">
+                    <div>
+                        <img src="https://d4804za1f1gw.cloudfront.net/wp-content/uploads/sites/30/2022/10/library-card.png?ver=221025144430" alt="">
+                    </div>
+                    <div class="get-card-header mt-3">
+                        <h3>Get a BPL Library Card Today</h3>
+                        <span>
+                            Your library card is your passport to technology, literacy, fluency, community, and so much more.
+                        </span>
+                        <a href="" class="btn get-card">Explore The Possibilities</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="card" style="width: 18rem;">
+                <img src="..." class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
             </div>
         </div>
     </div>

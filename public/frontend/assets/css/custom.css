@@ -1,11 +1,15 @@
 .event-header{
     background-color: #006072;
-    height: 3rem;
+    height: 2.75rem;
 }
 
 .event-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     height: 3.25rem;
-    text-align: center;
+    margin-top: 3px;
+
 }
 
 .event-body-span{
@@ -22,3 +26,34 @@
     text-align: center;
     line-height: 1;
 }
+
+.event-info{
+    /*margin-left: 5px;*/
+}
+
+.event-date{
+    /*display: inline-block;*/
+    /*margin-bottom: 2px;*/
+}
+
+.get-card-info{
+    background-color: #006072;
+
+}
+
+.get-card-header{
+    color: white;
+}
+
+.get-card{
+    display: inline-block;
+    text-decoration: none;
+    border: 1px solid;
+    background-color: peachpuff !important;
+    text-align: center;
+    padding: 6px 16px 8px;
+    border-radius: 4px;
+    font-weight: 600;
+    min-height: 40px;
+}
+
