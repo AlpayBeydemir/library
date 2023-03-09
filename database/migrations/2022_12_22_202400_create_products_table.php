@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer("category_id");
             $table->string("name");
+            $table->text("description");
             $table->string("publisher");
             $table->year("publication_year");
             $table->string("language");

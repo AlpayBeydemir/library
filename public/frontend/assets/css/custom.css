@@ -57,3 +57,10 @@
     min-height: 40px;
 }
 
+.product-detail{
+    /*display: flex;*/
+}
+
+.product-author{
+    color: #0b90e2;
+}

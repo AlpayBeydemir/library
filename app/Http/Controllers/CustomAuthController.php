@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use App\Models\Product;
 
 
 class CustomAuthController extends Controller
@@ -95,7 +96,11 @@ class CustomAuthController extends Controller
         }
         else
         {
-            return view('frontend.home');
+            $data = [
+                'products' => Product::orderBy("id", "DESC")->take(10)->get()
+            ];
+
+            return view('frontend.home',$data);
         }
     }
 
