@@ -86,7 +86,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ $product->name }}</h5>
                         <span> Publisher : {{ $product->publisher }}</span>
-                        <a href="{{ route('product-detail', $product->id) }}" class="btn btn-primary">Go To Detail!</a>
+                        <a href="{{ route('product-detail', $product->id) }}" class="btn btn-primary">Go To Detail</a>
                     </div>
                 </div>
             @endforeach

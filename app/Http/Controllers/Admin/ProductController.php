@@ -45,6 +45,10 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
+            if (!isset($request->description) || empty($request->description || trim($request->description) == "")) {
+                throw new \Exception("Please Enter Book Description");
+            }
+
             if (!isset($request->publisher) || empty($request->publisher || trim($request->publisher) == "")) {
                 throw new \Exception("Please Enter Publisher Name");
             }
@@ -100,6 +104,7 @@ class ProductController extends Controller
 
             $product->category_id      = $request->category_id;
             $product->name             = $request->name;
+            $product->description      = $request->description;
             $product->publisher        = $request->publisher;
             $product->publication_year = $request->publication_year;
             $product->language         = $request->language;
@@ -183,6 +188,10 @@ class ProductController extends Controller
                 throw new \Exception("Please Enter Book Name");
             }
 
+            if (!isset($request->description) || empty($request->description || trim($request->description) == "")) {
+                throw new \Exception("Please Enter Book Description");
+            }
+
             if (!isset($request->publisher) || empty($request->publisher || trim($request->publisher) == "")) {
                 throw new \Exception("Please Enter Publisher Name");
             }
@@ -240,6 +249,7 @@ class ProductController extends Controller
 
             $product->category_id      = $request->category_id;
             $product->name             = $request->name;
+            $product->description      = $request->description;
             $product->publisher        = $request->publisher;
             $product->publication_year = $request->publication_year;
             $product->language         = $request->language;

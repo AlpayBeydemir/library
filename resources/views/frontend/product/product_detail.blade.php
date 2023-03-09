@@ -7,7 +7,7 @@
 
         <div class="col-lg-3">
             <div>
-                <img src="{{ Storage::url($product->image) }}" alt="">
+                <img src="{{ Storage::url($product->image) }}" alt="" style="width: 85%;">
             </div>
         </div>
 
@@ -55,7 +55,7 @@
                             <span>For</span>
                             <form action="" method="post">
 
-                                <select class="form-select mt-3" name="borrow_time" id="borrow_time" style="width: 50%">
+                                <select class="form-select mt-3" name="borrow_time" id="borrow_time">
                                     <option value="0">7 Days</option>
                                     <option value="1">14 Days</option>
                                     <option value="2">21 Days</option>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Frontend\ProductDetailController;
+use App\Http\Controllers\Frontend\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -86,6 +87,8 @@ Route::group(['middleware' => 'user_check:user'], function (){
     // Auth Routes
     Route::get('/library', [CustomAuthController::class, 'Library'])->name('library');
 
+    // User Routes
+    Route::get('profile', [UserController::class, 'profile'])->name('profile');
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){

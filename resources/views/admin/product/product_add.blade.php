@@ -66,6 +66,11 @@
                                         </div>
 
                                         <div class="mb-3">
+                                            <label for="description" class="form-label"> Description </label>
+                                            <textarea class="form-control" name="description" id="description" cols="10" rows="5" placeholder="Description"></textarea>
+                                        </div>
+
+                                        <div class="mb-3">
                                             <label for="publisher" class="form-label"> Publisher </label>
                                             <input type="text" class="form-control" name="publisher" id="publisher">
                                         </div>

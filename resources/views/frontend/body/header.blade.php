@@ -15,7 +15,7 @@
                             <a class="nav-link active" aria-current="page" href="#"> Events </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#"> My Profile </a>
+                            <a class="nav-link active" aria-current="page" href="{{ route('profile') }}"> My Profile </a>
                         </li>
                     </ul>
                 </div>
