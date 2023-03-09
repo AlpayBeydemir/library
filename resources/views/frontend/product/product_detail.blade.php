@@ -46,15 +46,37 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Borrow Menu</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        ...
+                        <h6>{{ $product->name }}</h6>
+                        <div>
+                            <span>For</span>
+                            <form action="" method="post">
+
+                                <select class="form-select mt-3" name="borrow_time" id="borrow_time" style="width: 50%">
+                                    <option value="0">7 Days</option>
+                                    <option value="1">14 Days</option>
+                                    <option value="2">21 Days</option>
+                                </select>
+
+                                <select class="form-select mt-3" name="receive_type" id="receive_type">
+                                    <option value="0">Get Book From Library</option>
+                                    <option value="0">Deliver To Your Address</option>
+                                </select>
+
+                                <select class="form-select mt-3" name="address" id="address">
+                                    <option value="0">Address 1</option>
+                                    <option value="1">Address 2</option>
+                                </select>
+
+                            </form>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="button" class="btn btn-primary">Borrow</button>
                     </div>
                 </div>
             </div>
@@ -64,4 +86,10 @@
     </div>
 </div>
 
+@endsection()
+
+@section('js')
+    <script>
+
+    </script>
 @endsection()
