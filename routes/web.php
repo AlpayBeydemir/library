@@ -89,6 +89,8 @@ Route::group(['middleware' => 'user_check:user'], function (){
 
     // User Routes
     Route::get('profile', [UserController::class, 'profile'])->name('profile');
+    Route::post('add_address', [UserController::class, 'AddAddress'])->name('add_address');
+    Route::get('/delete/address/{id}',[UserController::class, 'DeleteAddress'])->name('delete.address');
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){

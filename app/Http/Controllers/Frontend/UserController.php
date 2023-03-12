@@ -3,12 +3,20 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\User_address;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use mysql_xdevapi\Exception;
+use function Sodium\add;
 
 class UserController extends Controller
 {
+//    public function __construct(Auth $user)
+//    {
+//        $this->user = $user;
+//    }
+
     public function profile()
     {
         $user = Auth::user();
@@ -18,5 +26,79 @@ class UserController extends Controller
         ];
 
         return view('frontend.user_profile.profile', $data);
+    }
+
+    public function AddAddress(Request $request)
+    {
+        try {
+
+            if (!isset($request->address_name) || empty($request->address_name)){
+                throw new \Exception("Please Enter Address Name");
+            }
+
+            if (!isset($request->address) || empty($request->address)){
+                throw new \Exception("Please Enter Address");
+            }
+
+            // find user
+            $user = Auth::user();
+
+            $address = new User_address();
+
+            $address->user_id      = $user->id;
+            $address->address_name = $request->address_name;
+            $address->address      = $request->address;
+
+            $address->save();
+
+            $jsonData = [
+                "error" => 0,
+                "message" => "Address Saved Successfuly",
+                "url" => route("profile")
+            ];
+
+            echo json_encode($jsonData);
+
+        } catch (\Exception $e){
+
+            $jsonData = [
+                "error" => 1,
+                "message" => $e->getMessage()
+            ];
+
+            echo json_encode($jsonData);
+        }
+    }
+
+    public function DeleteAddress($id)
+    {
+        try {
+            $address = User_address::find($id);
+            if (!$address){
+                throw new \Exception("The Address Could Not Found");
+            }
+            else {
+                $deleted_address = User_address::find($id)->delete($address);
+                if (!$deleted_address){
+                    throw new \Exception("The Address Could Not Delete. Please Try Again Later.");
+                }
+                else {
+                    $notification = array(
+                        'message'    => 'Address Deleted Successfully',
+                        'alert-type' => 'success'
+                    );
+
+                    return redirect()->back()->with($notification);
+                }
+            }
+        }
+        catch (\Exception $e){
+            $notification = array(
+                'message'    => $e->getMessage(),
+                'alert-type' => 'error'
+            );
+
+            return redirect()->back()->with($notification);
+        }
     }
 }

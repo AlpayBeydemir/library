@@ -63,13 +63,16 @@
 
                                 <select class="form-select mt-3" name="receive_type" id="receive_type">
                                     <option value="0">Get Book From Library</option>
-                                    <option value="0">Deliver To Your Address</option>
+                                    <option value="1">Deliver To Your Address</option>
                                 </select>
 
-                                <select class="form-select mt-3" name="address" id="address">
-                                    <option value="0">Address 1</option>
-                                    <option value="1">Address 2</option>
-                                </select>
+                                <div id="user_address_select">
+                                    <select class="form-select mt-3" name="address" id="address">
+                                        @foreach($user->user_address as $address)
+                                            <option value="{{ $address->id }}">{{ $address->address }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
                             </form>
                         </div>
@@ -89,7 +92,16 @@
 @endsection()
 
 @section('js')
-    <script>
 
+    <script>
+        $(document).ready(function (){
+            var deliver_type = $("#receive_type").val();
+            if(deliver_type == 0){
+                $("#user_address_select").hide();
+            } else {
+                $("#user_address_select").show();
+            }
+        });
     </script>
+
 @endsection()
