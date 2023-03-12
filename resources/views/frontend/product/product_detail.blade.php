@@ -52,21 +52,23 @@
                     <div class="modal-body">
                         <h6>{{ $product->name }}</h6>
                         <div>
-                            <span>For</span>
-                            <form action="" method="post">
-
-                                <select class="form-select mt-3" name="borrow_time" id="borrow_time">
+                            <form id="borrow_product_form">
+                                @csrf
+                                <label for="delivered_date">For</label>
+                                <select class="form-select mt-3 mb-3" name="delivered_date" id="delivered_date">
                                     <option value="0">7 Days</option>
                                     <option value="1">14 Days</option>
                                     <option value="2">21 Days</option>
                                 </select>
 
-                                <select class="form-select mt-3" name="receive_type" id="receive_type">
-                                    <option value="0">Get Book From Library</option>
+                                <label for="receive_type">How Would You Receive The Book?</label>
+                                <select class="form-select mt-3 mb-3" name="receive_type" id="receive_type">
                                     <option value="1">Deliver To Your Address</option>
+                                    <option value="0">Get Book From Library</option>
                                 </select>
 
                                 <div id="user_address_select">
+                                    <label for="address">Select Your Address</label>
                                     <select class="form-select mt-3" name="address" id="address">
                                         @foreach($user->user_address as $address)
                                             <option value="{{ $address->id }}">{{ $address->address }}</option>
@@ -79,7 +81,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Borrow</button>
+                        <button type="button" class="btn btn-primary" id="borrow_product_btn">Borrow</button>
                     </div>
                 </div>
             </div>
@@ -93,14 +95,52 @@
 
 @section('js')
 
-    <script>
+    <script type="text/javascript">
         $(document).ready(function (){
-            var deliver_type = $("#receive_type").val();
-            if(deliver_type == 0){
-                $("#user_address_select").hide();
-            } else {
-                $("#user_address_select").show();
-            }
+            $("#receive_type").on("change", function (){
+               var value = $(this).val();
+               if(value == 0){
+                   $("#user_address_select").hide();
+               }
+               else {
+                   $("#user_address_select").show();
+               }
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function (){
+            $('#borrow_product_btn').click(function (){
+                var formData = new FormData();
+                var product_store = $('#borrow_product_form').serializeArray();
+
+                $.each(product_store, function (key, el){
+                    formData.append(el.name, el.value);
+                })
+
+                $.ajax({
+                    url         : "{{ route('borrow.product', $product->id) }}",
+                    method      : "POST",
+                    processData : false,
+                    contentType : false,
+                    cache       : false,
+                    data        : formData,
+
+                    success     : function (data){
+                        var result = JSON.parse(data);
+                        if (result.error == 1)
+                        {
+                            toastr.error(result.message);
+                        }
+                        else
+                        {
+                            toastr.success(result.message);
+                            location.href = result.url;
+                        }
+                    }
+                });
+            });
         });
     </script>
 

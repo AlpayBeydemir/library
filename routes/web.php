@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AuthorController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\BorrowProductController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Frontend\ProductDetailController;
 use App\Http\Controllers\Frontend\UserController;
@@ -79,6 +80,12 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
 
     });
+
+
+    // All Borrow Product
+    Route::controller(BorrowProductController::class)->group(function (){
+       Route::post('/borrow/product/{id}','BorrowProduct')->name('borrow.product');
+    });
 });
 
 
@@ -94,7 +101,7 @@ Route::group(['middleware' => 'user_check:user'], function (){
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){
-        Route::get('/product/detail{id}', 'ShowProduct')->name('product-detail');
+        Route::get('/product/detail/{id}', 'ShowProduct')->name('product-detail');
     });
 
 });

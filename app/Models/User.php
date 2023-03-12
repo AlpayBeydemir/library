@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $this->hasMany(User_address::class);
     }
 
+    public function borrow_product()
+    {
+        return $this->hasMany(BorrowProduct::class);
+    }
+
 }
