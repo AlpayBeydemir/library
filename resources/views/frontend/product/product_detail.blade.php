@@ -52,19 +52,21 @@
                     <div class="modal-body">
                         <h6>{{ $product->name }}</h6>
                         <div>
+
                             <form id="borrow_product_form">
                                 @csrf
+
                                 <label for="delivered_date">For</label>
-                                <select class="form-select mt-3 mb-3" name="delivered_date" id="delivered_date">
-                                    <option value="0">7 Days</option>
-                                    <option value="1">14 Days</option>
-                                    <option value="2">21 Days</option>
+                                <select class="form-select mt-3 mb-3" name="for_days" id="for_days">
+                                    <option value="7">7 Days</option>
+                                    <option value="14">14 Days</option>
+                                    <option value="21">21 Days</option>
                                 </select>
 
                                 <label for="receive_type">How Would You Receive The Book?</label>
                                 <select class="form-select mt-3 mb-3" name="receive_type" id="receive_type">
-                                    <option value="1">Deliver To Your Address</option>
-                                    <option value="0">Get Book From Library</option>
+                                    <option value="1" selected>Deliver To Your Address</option>
+                                    <option value="2">Get Book From Library</option>
                                 </select>
 
                                 <div id="user_address_select">
@@ -77,6 +79,7 @@
                                 </div>
 
                             </form>
+
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -99,7 +102,7 @@
         $(document).ready(function (){
             $("#receive_type").on("change", function (){
                var value = $(this).val();
-               if(value == 0){
+               if(value == 2){
                    $("#user_address_select").hide();
                }
                else {

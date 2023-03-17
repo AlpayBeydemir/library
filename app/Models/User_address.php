@@ -11,4 +11,9 @@ class User_address extends Model
 
     protected $table = "user_addresses";
     protected $guarded = [];
+
+    public function borrow_product_deliver()
+    {
+        return $this->hasMany(BorrowProduct::class);
+    }
 }

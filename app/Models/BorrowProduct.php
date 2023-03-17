@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BorrowProduct extends Model
 {
     use HasFactory;
+
+    protected $table = "borrow_products";
+    protected $guarded = [];
 }

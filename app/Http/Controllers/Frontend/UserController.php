@@ -17,7 +17,7 @@ class UserController extends Controller
 //        $this->user = $user;
 //    }
 
-    public function profile()
+    public function my_information()
     {
         $user = Auth::user();
 
@@ -54,7 +54,7 @@ class UserController extends Controller
             $jsonData = [
                 "error" => 0,
                 "message" => "Address Saved Successfuly",
-                "url" => route("profile")
+                "url" => route("my_information")
             ];
 
             echo json_encode($jsonData);
@@ -100,5 +100,16 @@ class UserController extends Controller
 
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function Orders()
+    {
+        $user = Auth::user();
+
+        $data = [
+            'profile' => $user,
+        ];
+
+        return view('frontend.user_profile.orders', $data);
     }
 }

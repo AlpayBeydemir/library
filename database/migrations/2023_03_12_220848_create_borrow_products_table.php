@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('product_id');
             $table->integer('category_id');
             $table->tinyInteger('type_of_delivery')->comment('0=>From Library, 1=>Deliver To Address');
+            $table->integer('user_address_id')->nullable();
             $table->date('issued_date');
             $table->date('delivered_date');
             $table->tinyInteger('delivered')->default(0)->comment('0=>Not Delivered, 1=>Delivered');
