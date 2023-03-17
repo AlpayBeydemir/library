@@ -39,10 +39,25 @@ class BorrowProductController extends Controller
             $category = $product->category_id;
 
             // issued date
-            $issued_date = date('d-m-y');
+            $issued_date = date('Y-m-d');
 
-            // delivered date
+            // delivered dates
             $delivered_date = $request->delivered_date;
+
+            if ($delivered_date == 0){
+                date('Y-m-d', strtotime($issued_date . ' + 7 days'));
+            }
+            elseif ($delivered_date == 1)
+            {
+                date('Y-m-d', strtotime($issued_date . ' + 14 days'));
+            }
+            else
+            {
+                date('Y-m-d', strtotime($issued_date . ' + 21 days'));
+            }
+
+            // application number
+            $app_number = rand(1000000,10000000);
 
         } catch (\Exception $e){
 
