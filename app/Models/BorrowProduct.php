@@ -11,4 +11,9 @@ class BorrowProduct extends Model
 
     protected $table = "borrow_products";
     protected $guarded = [];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -84,6 +84,7 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
     // All Borrow Product
     Route::controller(BorrowProductController::class)->group(function (){
         Route::post('/borrow/product/{id}','BorrowProduct')->name('borrow.product');
+        Route::post('/extend/time/{id}','ExtendTime')->name('extend.time');
     });
 
 });
@@ -96,9 +97,9 @@ Route::group(['middleware' => 'user_check:user'], function (){
 
     // User Routes
     Route::get('MyInformation', [UserController::class, 'my_information'])->name('my_information');
-    Route::post('add_address', [UserController::class, 'AddAddress'])->name('add_address');
+    Route::post('Add_address', [UserController::class, 'AddAddress'])->name('add_address');
     Route::get('/delete/address/{id}',[UserController::class, 'DeleteAddress'])->name('delete.address');
-    Route::get('/orders',[UserController::class, 'Orders'])->name('orders');
+    Route::get('/Orders',[UserController::class, 'Orders'])->name('orders');
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){

@@ -95,4 +95,23 @@ class BorrowProductController extends Controller
             echo json_encode($jsonData);
         }
     }
+
+    public function ExtendTime(Request $request, $id)
+    {
+        $borrow_product = BorrowProduct::find($id);
+
+        $old_delivered_date = $borrow_product->delivered_date;
+        $new_delivered_date = date('Y-m-d', strtotime($old_delivered_date . ' + 7 days'));
+
+        $borrow_product->delivered_date = $new_delivered_date;
+        $borrow_product->save();
+
+        $jsonData = [
+            "error"   => 0,
+            "message" => "Your Delivered Date Time Is Extended",
+            "url"     => route('orders')
+        ];
+
+        echo json_encode($jsonData);
+    }
 }

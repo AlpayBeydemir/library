@@ -22,6 +22,11 @@ class Product extends Model
         return $this->belongsTo(Categories::class, "category_id", "id");
     }
 
+    public function borrow_product()
+    {
+        return $this->belongsToMany(BorrowProduct::class);
+    }
+
 
 
 //    public function isbn()

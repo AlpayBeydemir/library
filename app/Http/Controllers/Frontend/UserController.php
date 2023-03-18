@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\BorrowProduct;
 use App\Models\User_address;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -106,8 +107,12 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
+        $userProducts = BorrowProduct::where('user_id', $user->id)->get();
+//        dd($userProducts);
+
         $data = [
             'profile' => $user,
+            'userProducts' => $userProducts,
         ];
 
         return view('frontend.user_profile.orders', $data);

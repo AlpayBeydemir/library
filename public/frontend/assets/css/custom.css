@@ -99,3 +99,39 @@
 .dropdown:hover .dropdown-content {display: block;}
 
 /*.dropdown:hover .dropbtn {background-color: #3e8e41;}*/
+
+.order-head{
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.order-row{
+    width: 100%;
+    margin-left: 0;
+    margin-bottom: 2rem;
+    border-style: solid;
+    border-width: 3px;
+    /*border-color: #997029;*/
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.order-card{
+    display: flex;
+}
+
+.product-name, .issued-date, .delivered-date, .application-number{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+}
+
+.product-name{
+    margin-left: 5rem;
+}
+
+.extend-btn{
+    display: flex;
+    margin: 2rem 1.5rem;
+}
