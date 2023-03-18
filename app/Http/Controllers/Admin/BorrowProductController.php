@@ -98,20 +98,39 @@ class BorrowProductController extends Controller
 
     public function ExtendTime(Request $request, $id)
     {
-        $borrow_product = BorrowProduct::find($id);
+        try {
 
-        $old_delivered_date = $borrow_product->delivered_date;
-        $new_delivered_date = date('Y-m-d', strtotime($old_delivered_date . ' + 7 days'));
+//            dd($request);
 
-        $borrow_product->delivered_date = $new_delivered_date;
-        $borrow_product->save();
+            if (!isset($request->delivered_date) || empty($request->delivered_date))
+            {
+                throw new \Exception("Please Select New Deliver Time");
+            }
 
-        $jsonData = [
-            "error"   => 0,
-            "message" => "Your Delivered Date Time Is Extended",
-            "url"     => route('orders')
-        ];
+            $borrow_product = BorrowProduct::find($id);
 
-        echo json_encode($jsonData);
+            // delivered time from form
+            $new_delivered_date = $request->delivered_date;
+
+            $borrow_product->delivered_date = $new_delivered_date;
+            $borrow_product->save();
+
+            $jsonData = [
+                "error"   => 0,
+                "message" => "Your Delivered Date Time Is Extended",
+                "url"     => route('orders')
+            ];
+
+            echo json_encode($jsonData);
+
+        } catch (\Exception $e)
+        {
+            $jsonData = [
+                "error" => 1,
+                "message" => $e->getMessage()
+            ];
+
+            echo json_encode($jsonData);
+        }
     }
 }

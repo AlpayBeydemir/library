@@ -11,7 +11,7 @@
         @foreach($userProducts as $userProduct)
             <div class="row order-row">
                 <div class="col-lg-12 col-md-12 order-card">
-                    <img src="{{ Storage::url($userProduct->image) }}" alt="" style="width: 15%; margin-left: -12px;">
+                    <img src="{{ Storage::url($userProduct->product->image) }}" alt="" style="width: 15%; margin-left: -12px;">
 
                     <div class="product-name">
                         <h5>Product Name</h5>
@@ -33,12 +33,18 @@
                         <span>{{ $userProduct->application_number }}</span>
                     </div>
 
-                    <form id="extend_time">
-                        @csrf
-                        <div class="extend-btn">
-                            <button type="button" value="{{ $userProduct->id }}" id="extend_delivered_date_btn" class="btn btn-primary">Extend Delivered Date</button>
-                        </div>
-                    </form>
+                    <div class="extend_time_form">
+                        <form id="extend_time">
+                            @csrf
+                            <div>
+                                <input class="form-control" type="date" name="delivered_date" id="delivered_date" value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime(' + 14 days')) }}" >
+                            </div>
+
+                            <div class="extend-btn">
+                                <button type="button" value="{{ $userProduct->id }}" id="extend_delivered_date_btn" class="btn btn-primary">Extend Delivered Date</button>
+                            </div>
+                        </form>
+                    </div>
 
                 </div>
             </div>

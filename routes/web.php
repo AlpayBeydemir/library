@@ -81,12 +81,6 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
 
     });
 
-    // All Borrow Product
-    Route::controller(BorrowProductController::class)->group(function (){
-        Route::post('/borrow/product/{id}','BorrowProduct')->name('borrow.product');
-        Route::post('/extend/time/{id}','ExtendTime')->name('extend.time');
-    });
-
 });
 
 
@@ -104,6 +98,12 @@ Route::group(['middleware' => 'user_check:user'], function (){
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){
         Route::get('/product/detail/{id}', 'ShowProduct')->name('product-detail');
+    });
+
+    // All Borrow Product
+    Route::controller(BorrowProductController::class)->group(function (){
+        Route::post('/borrow/product/{id}','BorrowProduct')->name('borrow.product');
+        Route::post('/extend/time/{id}','ExtendTime')->name('extend.time');
     });
 
 });
