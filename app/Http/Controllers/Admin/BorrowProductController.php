@@ -29,6 +29,9 @@ class BorrowProductController extends Controller
             // find user
             $user = Auth::user();
 
+            // find product
+            $product = Product::findOrFail($id);
+
             // bir kullanıcı elinde 3 ten fazla kitap bulunduramaz.
             $user_count_book = BorrowProduct::where('user_id', $user->id)->where('delivered', 0)->count();
 //            dd($user_count_book);
@@ -36,8 +39,16 @@ class BorrowProductController extends Controller
             if ($user_count_book >= 3)
                 throw new \Exception("You Can Not Borrow Books More Than 3 At The Same Time");
 
-            // find product
-            $product = Product::findOrFail($id);
+
+            // kullanıcı aldığı kitabı teslim etmeden aynı kitabı kiralayamaz.(buton disabled)
+            // kullanıcnın alıp henüz teslim etmediği kitaplar!
+            $user_has_book = BorrowProduct::where('user_id', $user->id)->where('product_id', $id)->where('delivered', 0)->get();
+//            dd($user_has_book);
+
+            foreach ($user_has_book as $user_book){
+                if ($user_book->product_id == $id)
+                    throw new \Exception("You Can Not Borrow This Book Again Until You Deliver The Book");
+            }
 
             // find category
             $category = $product->category_id;
@@ -93,7 +104,8 @@ class BorrowProductController extends Controller
                 "url" => route("orders")
             ];
 
-            echo json_encode($jsonData);
+            return response($jsonData);
+//            echo json_encode($jsonData);
 
         } catch (\Exception $e){
 
@@ -101,8 +113,8 @@ class BorrowProductController extends Controller
                 "error" => 1,
                 "message" => $e->getMessage()
             ];
-
-            echo json_encode($jsonData);
+            return response($jsonData);
+//            echo json_encode($jsonData);
         }
     }
 
