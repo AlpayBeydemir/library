@@ -29,6 +29,13 @@ class BorrowProductController extends Controller
             // find user
             $user = Auth::user();
 
+            // bir kullanıcı elinde 3 ten fazla kitap bulunduramaz.
+            $user_count_book = BorrowProduct::where('user_id', $user->id)->where('delivered', 0)->count();
+//            dd($user_count_book);
+
+            if ($user_count_book >= 3)
+                throw new \Exception("You Can Not Borrow Books More Than 3 At The Same Time");
+
             // find product
             $product = Product::findOrFail($id);
 
@@ -70,7 +77,10 @@ class BorrowProductController extends Controller
             $borrow_product->product_id         = $product->id;
             $borrow_product->category_id        = $product->category_id;
             $borrow_product->type_of_delivery   = $type_of_delivery;
-            $borrow_product->user_address_id    = $user_address_id;
+            if (isset($borrow_product->user_address_id) && !empty($borrow_product->user_address_id))
+            {
+                $borrow_product->user_address_id = $user_address_id;
+            }
             $borrow_product->issued_date        = $issued_date;
             $borrow_product->delivered_date     = $delivered_date;
             $borrow_product->application_number = $app_number;
@@ -80,7 +90,7 @@ class BorrowProductController extends Controller
             $jsonData = [
                 "error" => 0,
                 "message" => "Product Borrowed Successfuly",
-                "url" => route("profile")
+                "url" => route("orders")
             ];
 
             echo json_encode($jsonData);
