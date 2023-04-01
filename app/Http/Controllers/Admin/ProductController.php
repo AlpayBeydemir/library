@@ -17,7 +17,14 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data['products'] = Product::with('author')->get();
+        $products = Product::with('author')->get();
+        $authors = Author::all();
+        $categories = Categories::where('is_active', 1)->get();
+        $data = [
+            'products'   => $products,
+            'authors'    => $authors,
+            'categories' => $categories,
+            ];
 //        dd($data);
 
         return view("admin.product.product", $data);
@@ -331,5 +338,29 @@ class ProductController extends Controller
     public function DeleteProduct($id)
     {
 
+    }
+
+    public function ProductFilter(Request $request)
+    {
+        $authors  = $request->authors;
+        $category = $request->categories;
+        $name     = $request->name;
+
+        $products = Product::when($authors, function ($query, $authors){
+          return $query->where('author_id', $authors);
+        })
+            ->when($category, function ($query, $category){
+                return $query->where('category', $category);
+
+            })
+            ->get();
+
+        $data = [
+            'products'   => $products,
+            'authors'    => $authors,
+            'category'   => $category,
+        ];
+
+        return view("admin.product.product_filter", $data);
     }
 }

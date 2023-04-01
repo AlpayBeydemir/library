@@ -36,7 +36,7 @@
                     </div>
                 </form>
 
-                    <div class="row">
+                <div class="row">
                     <table class="table table-striped table-bordered text-center">
                         <tr>
                             <th>Number</th>
@@ -84,3 +84,4 @@
 @section('js')
 
 @endsection
+

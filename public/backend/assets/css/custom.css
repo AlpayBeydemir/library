@@ -7,3 +7,9 @@
 .card-header-text{
     color: #b6233e;
 }
+
+.product-list-form{
+    display: flex;
+    margin-bottom: 2rem;
+}
+

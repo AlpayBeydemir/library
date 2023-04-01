@@ -77,6 +77,7 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
         Route::post('/store/product','StoreProduct')->name('store.product');
         Route::get('/edit/product/{id}','EditProduct')->name('edit.product');
         Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
+        Route::post('/filter/product','ProductFilter')->name('filter.product');
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
 
     });
