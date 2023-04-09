@@ -342,23 +342,26 @@ class ProductController extends Controller
 
     public function ProductFilter(Request $request)
     {
-        $authors  = $request->authors;
+        $authors = Author::all();
+        $categories = Categories::where('is_active', 1)->get();
+
+        $author  = $request->authors;
         $category = $request->categories;
         $name     = $request->name;
 
-        $products = Product::when($authors, function ($query, $authors){
-          return $query->where('author_id', $authors);
-        })
-            ->when($category, function ($query, $category){
-                return $query->where('category', $category);
+       $products = Product::whereHas('author', function ($query) use ($author){
+          $query->where('author_id', $author);
+       })
+       ->whereHas('category', function ($query) use ($category){
+             $query->where('category_id', $category);
+       })->get();
 
-            })
-            ->get();
+//        dd($products);
 
         $data = [
-            'products'   => $products,
-            'authors'    => $authors,
-            'category'   => $category,
+            'products'     => $products,
+            'authors'      => $authors,
+            'categories'   => $categories,
         ];
 
         return view("admin.product.product_filter", $data);

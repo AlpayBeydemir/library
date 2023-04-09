@@ -12,7 +12,7 @@
                             <label for="authors"> Select Authors </label>
                             <select name="authors" id="authors" class="form-control">
                                 @foreach($authors as $author)
-                                    <option value="{{ $author->id }}"> {{ $author->name }} </option>
+                                    <option value="{{ $author->id }}" {{ $author->id == request('authors') ? 'selected' : '' }} > {{ $author->name }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -20,7 +20,7 @@
                             <label for="categories"> Select Category </label>
                             <select name="categories" id="categories" class="form-control">
                                 @foreach($categories as $category)
-                                    <option value="{{ $category->id }}"> {{ $category->name }} </option>
+                                    <option value="{{ $category->id }}" {{ $category->id == request('categories') ? 'selected' : '' }} > {{ $category->name }} </option>
                                 @endforeach
                             </select>
                         </div>
@@ -58,6 +58,7 @@
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->publisher }}</td>
                                 <td>{{ $product->category->name }}</td>
+{{--                                <td>{{ $product->author->name }}</td>--}}
                                 <td>
                                     @foreach($product->author as $auth)
                                         <li>{{ $auth->name }}</li>
