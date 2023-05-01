@@ -8,6 +8,7 @@
                 <form action="{{ route('filter.product') }}" method="post" id="product-filter">
                     @csrf
                     <div class="row" style="margin-bottom: 2rem;">
+
                         <div class="col-md-3">
                             <label for="authors"> Select Authors </label>
                             <select name="authors" id="authors" class="form-control">
@@ -16,6 +17,7 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-md-3">
                             <label for="categories"> Select Category </label>
                             <select name="categories" id="categories" class="form-control">
@@ -24,10 +26,12 @@
                                 @endforeach
                             </select>
                         </div>
+
                         <div class="col-md-3">
                             <label for="name"> Product Name </label>
-                            <input type="text" name="name" id="name" class="form-control">
+                            <input type="text" name="name" id="name" class="form-control" value="{{ $name }}">
                         </div>
+
                         <div class="col-md-3 product-filter-btn" style="margin-top: 1.8rem;">
                             <button type="submit" id="product-filter-btn" class="btn btn-outline-success"> Search </button>
                         </div>

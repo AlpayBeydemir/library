@@ -44,9 +44,10 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('add.product') }}">Add Book</a></li>
-                        <li><a href="{{ route('product') }}">Books</a></li>
+                        <li><a href="{{ route('product') }}">Books1</a></li>
                     </ul>
                 </li>
+
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

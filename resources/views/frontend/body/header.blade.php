@@ -18,7 +18,7 @@
                             <a class="nav-link active dropbtn" aria-current="page" href="{{ route('my_information') }}"> My Profile </a>
                             <div class="dropdown-content">
                                 <a href="{{ route('my_information') }}">My Information</a>
-                                <a href="{{ route('orders') }}">Orders</a>
+                                <a href="{{ route('Orders') }}">Orders</a>
                                 <a href="{{ route('logout') }}">Log Out</a>
                             </div>
                         </li>

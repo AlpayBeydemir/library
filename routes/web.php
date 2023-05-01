@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BorrowProductController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\OrdersController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Frontend\ProductDetailController;
 use App\Http\Controllers\Frontend\UserController;
@@ -82,6 +83,14 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
 
     });
 
+    // All Orders Routes
+    Route::controller(OrdersController::class)->group(function (){
+       Route::get('/GetOrders', 'GetOrders')->name('GetOrders');
+       Route::post('AdminExtendTime/{id}', 'AdminExtendTime')->name('AdminExtendTime');
+       Route::post('AdminReceiveProduct/{id}', 'AdminReceiveProduct')->name('AdminReceiveProduct');
+
+    });
+
 });
 
 
@@ -94,7 +103,7 @@ Route::group(['middleware' => 'user_check:user'], function (){
     Route::get('MyInformation', [UserController::class, 'my_information'])->name('my_information');
     Route::post('Add_address', [UserController::class, 'AddAddress'])->name('add_address');
     Route::get('/delete/address/{id}',[UserController::class, 'DeleteAddress'])->name('delete.address');
-    Route::get('/Orders',[UserController::class, 'Orders'])->name('orders');
+    Route::get('/Orders',[UserController::class, 'Orders'])->name('Orders');
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){

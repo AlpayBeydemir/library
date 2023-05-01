@@ -9,9 +9,7 @@ use http\Exception;
 use App\Models\Product;
 use App\Models\Author;
 use App\Models\Categories;
-use App\Models\Product_isbn;
 use Intervention\Image\Facades\Image;
-use Illuminate\Support\Carbon;
 
 class ProductController extends Controller
 {
@@ -345,16 +343,41 @@ class ProductController extends Controller
         $authors = Author::all();
         $categories = Categories::where('is_active', 1)->get();
 
-        $author  = $request->authors;
+        $author   = $request->authors;
         $category = $request->categories;
         $name     = $request->name;
 
-       $products = Product::whereHas('author', function ($query) use ($author){
-          $query->where('author_id', $author);
-       })
-       ->whereHas('category', function ($query) use ($category){
-             $query->where('category_id', $category);
-       })->get();
+        $products = Product::query();
+
+        if ($request->filled('authors'))
+        {
+            $products->whereHas('author', function ($query) use ($request)
+            {
+               $query->where('author_id', $request->authors);
+            });
+        }
+
+        if ($request->filled('categories'))
+        {
+            $products->whereHas('category', function ($query) use ($request)
+            {
+                $query->where('category_id', $request->categories);
+            });
+        }
+
+        if ($request->filled('name'))
+        {
+            $products->where('name', 'LIKE', '%'. $request->input('name') . '%');
+        }
+
+        $products = $products->get();
+
+//       $products = Product::whereHas('author', function ($query) use ($author){
+//          $query->where('author_id', $author);
+//       })
+//       ->whereHas('category', function ($query) use ($category){
+//             $query->where('category_id', $category);
+//       })->get();
 
 //        dd($products);
 
@@ -362,6 +385,7 @@ class ProductController extends Controller
             'products'     => $products,
             'authors'      => $authors,
             'categories'   => $categories,
+            'name'         => $name
         ];
 
         return view("admin.product.product_filter", $data);
