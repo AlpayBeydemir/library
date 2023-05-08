@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\OrdersController;
+use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Frontend\ProductDetailController;
 use App\Http\Controllers\Frontend\UserController;
@@ -80,6 +81,14 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
         Route::post('/update/product/{id}','UpdateProduct')->name('update.product');
         Route::post('/filter/product','ProductFilter')->name('filter.product');
 //   Route::get('/delete/product/{id}','DeleteProduct')->name('delete.product');
+
+    });
+
+    // All Events Routes
+    Route::controller(EventController::class)->group(function (){
+        Route::get('/Events','Events')->name('Events');
+        Route::get('/CreateEvents','CreateEvents')->name('CreateEvents');
+        Route::post('/StoreEvent','StoreEvent')->name('store.event');
 
     });
 
