@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Author;
 use App\Models\EventFileModel;
 use App\Models\EventModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class EventController extends Controller
 {
@@ -191,13 +189,47 @@ class EventController extends Controller
             return response()->json($jsonData);
 
         } catch (\Exception $e) {
-            
+
             $jsonData = [
                 "error"   => 1,
                 "message" => $e->getMessage()
             ];
 
             return response()->json($jsonData);
+        }
+    }
+
+    public function DeleteEvent($id)
+    {
+        try {
+            $event = EventModel::where('id', $id)->first();
+            if (!$event){
+                throw new \Exception("The Event Could Not Found");
+            }
+            else {
+                $event->deleted = 1;
+                $event->update();
+                if (!$event->update()){
+                    throw new \Exception("The Event Could Not Delete. Please Try Again Later.");
+                }
+                else {
+                    $notification = [
+                        'message'    => 'The Event Deleted Successfully',
+                        'alert-type' => 'success'
+                    ];
+
+                    return redirect()->back()->with($notification);
+                }
+            }
+        }
+        catch (\Exception $e){
+
+            $notification = [
+                'message'    => $e->getMessage(),
+                'alert-type' => 'error'
+            ];
+
+            return redirect()->back()->with($notification);
         }
     }
 }
