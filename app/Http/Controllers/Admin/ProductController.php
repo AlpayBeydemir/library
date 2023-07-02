@@ -174,7 +174,6 @@ class ProductController extends Controller
 
         $data['products'] = $products;
         $data['authors'] = $authors;
-//        dd($authors);
         return view("admin.product.product_edit", $data);
     }
 

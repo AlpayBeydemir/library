@@ -13,10 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('event_file_models', function (Blueprint $table) {
+        Schema::create('events_participants', function (Blueprint $table) {
             $table->id();
             $table->integer('event_id');
-            $table->string('file');
+            $table->integer('participants');
+            $table->integer('status')->comment('0 => Cancelled, 1 => Will Join');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('event_file_models');
+        Schema::dropIfExists('events_participants');
     }
 };
