@@ -35,29 +35,31 @@
             </div>
 
             <div class="col-lg-4">
-                <h4>Featured Events ></h4>
-
-                <div class="featured-events">
-                    <div class="card text-center" style="width: 5rem; float: left; margin-right: 20px;">
-                        <div class="card-header event-header">
-                            <span class="event-header-span">March</span>
+                <h4>Featured Events</h4>
+                @foreach($events as $event)
+                    @if($event->selected_time > date('Y-m-d'))
+                        <div class="featured-events">
+                            <div class="card text-center event-header-div">
+                                <div class="card-header event-header">
+                                    @php($date = \Carbon\Carbon::createFromFormat('Y-m-d H:i:s', $event->selected_time))
+                                    <span class="event-header-span">{{ $date->format('F') }}</span>
+                                </div>
+                                <div class="card-body event-body">
+                                    <h3>{{ $date->format('d') }}</h3>
+                                </div>
+                            </div>
+                            <div class="event-info">
+                                <a href="{{ route('DetailEvent', $event->id) }}"><h6>{{ $event->name }}</h6></a>
+                                <div>
+                                    <span class="event-date">{{ $date->format('F') . $date->format('d') ."th " . "|" . " " . $date->format('H:i') }}</span>
+                                </div>
+                                <div>
+                                    <span class="event-location">{{ $event->address }}</span>
+                                </div>
+                            </div>
                         </div>
-                        <div class="card-body event-body">
-                            <h3>3</h3>
-{{--                            <span class="event-body-span">3</span>--}}
-                        </div>
-                    </div>
-                    <div class="event-info">
-                        <a href=""><h6>Buying vs. Leasing a Car: Which is Right for You?</h6></a>
-                        <div>
-                            <span class="event-date">Mar 8th | 10:30am - 11:30am</span>
-                        </div>
-                        <div>
-                            <span class="event-location">Central Library in Copley Square</span>
-                        </div>
-                    </div>
-                </div>
-
+                    @endif
+                @endforeach
             </div>
 
         </div>

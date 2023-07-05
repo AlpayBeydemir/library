@@ -208,6 +208,7 @@ class EventController extends Controller
             }
             else {
                 $event->deleted = 1;
+                $event->deleted_by = Auth::user()->id;
                 $event->update();
                 if (!$event->update()){
                     throw new \Exception("The Event Could Not Delete. Please Try Again Later.");

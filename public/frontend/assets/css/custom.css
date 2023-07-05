@@ -1,3 +1,9 @@
+.event-header-div{
+    width: 5rem;
+    float: left;
+    margin-right: 20px;
+}
+
 .event-header{
     background-color: #006072;
     height: 2.75rem;
@@ -134,4 +140,12 @@
 .extend-btn{
     display: flex;
     margin: 2rem 1.5rem;
+}
+
+.featured-events{
+    height: 8rem;
+}
+
+.swal2-cancel{
+    margin-right: 15px;
 }

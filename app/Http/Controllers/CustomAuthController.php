@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -50,7 +51,7 @@ class CustomAuthController extends Controller
                 "url"       => route("login")
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
 
         }catch (\Exception $e){
 
@@ -59,7 +60,7 @@ class CustomAuthController extends Controller
                 "message"  => $e->getMessage()
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
         }
     }
 
@@ -96,8 +97,12 @@ class CustomAuthController extends Controller
         }
         else
         {
+            $products = Product::orderBy("id", "DESC")->take(10)->get();
+            $events = EventModel::where('deleted',0)->orderBy('selected_time', 'DESC')->limit(5)->get();
+
             $data = [
-                'products' => Product::orderBy("id", "DESC")->take(10)->get()
+                'products' => $products,
+                'events'   => $events
             ];
 
             return view('frontend.home',$data);

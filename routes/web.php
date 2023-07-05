@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EventController;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\Frontend\ProductDetailController;
 use App\Http\Controllers\Frontend\UserController;
+use App\Http\Controllers\Frontend\EventDetailController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,7 +72,6 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
 
     });
 
-
     // All Product Routes
     Route::controller(ProductController::class)->group(function (){
         Route::get('/product','index')->name('product');
@@ -126,6 +126,12 @@ Route::group(['middleware' => 'user_check:user'], function (){
     Route::controller(BorrowProductController::class)->group(function (){
         Route::post('/borrow/product/{id}','BorrowProduct')->name('borrow.product');
         Route::post('/extend/time/{id}','ExtendTime')->name('extend.time');
+    });
+
+    // All Event Modul
+    Route::controller(EventDetailController::class)->group(function (){
+       Route::get('Detail/Event/{id}', 'DetailEvent')->name('DetailEvent');
+       Route::post('JoinEvent', 'JoinEvent')->name('JoinEvent');
     });
 
 });
