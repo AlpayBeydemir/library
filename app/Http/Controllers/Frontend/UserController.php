@@ -4,12 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\BorrowProduct;
+use App\Models\User;
 use App\Models\User_address;
 use Illuminate\Http\Request;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use mysql_xdevapi\Exception;
-use function Sodium\add;
 
 class UserController extends Controller
 {
@@ -54,20 +52,19 @@ class UserController extends Controller
 
             $jsonData = [
                 "error" => 0,
-                "message" => "Address Saved Successfuly",
-                "url" => route("my_information")
+                "msg" => "Address Saved Successfuly",
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
 
         } catch (\Exception $e){
 
             $jsonData = [
                 "error" => 1,
-                "message" => $e->getMessage()
+                "msg" => $e->getMessage()
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
         }
     }
 
@@ -108,7 +105,6 @@ class UserController extends Controller
         $user = Auth::user();
 
         $userProducts = BorrowProduct::where('user_id', $user->id)->get();
-//        dd($userProducts);
 
         $data = [
             'profile' => $user,
@@ -116,5 +112,48 @@ class UserController extends Controller
         ];
 
         return view('frontend.user_profile.orders', $data);
+    }
+
+    public function UpdateProfile(Request $request)
+    {
+        try {
+
+            $id = $request->id;
+
+            if (!$id){
+                throw new \Exception("Kullanıcı id bilgisi bulunamadı");
+            }
+
+            $name = $request->name;
+            $email = $request->email;
+
+            $user = User::find($id);
+
+            if (!$user){
+                throw new \Exception("Kullanıcı Bulunamadı");
+            }
+
+            $user->name  = $name;
+            $user->email = $email;
+
+            $user->save();
+
+            $jsonData = [
+                "error" => 0,
+                "msg" => "İşlem Başarılı"
+            ];
+
+            return response()->json($jsonData);
+
+        } catch (\Exception $e){
+
+            $jsonData = [
+                "error" => 1,
+                "msg" => $e->getMessage()
+            ];
+
+            return response()->json($jsonData);
+
+        }
     }
 }

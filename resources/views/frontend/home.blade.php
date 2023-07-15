@@ -65,23 +65,6 @@
         </div>
 
         <div class="row mt-5">
-            <div class="col-lg-12">
-                <div class="get-card-info" style="display: flex">
-                    <div>
-                        <img src="https://d4804za1f1gw.cloudfront.net/wp-content/uploads/sites/30/2022/10/library-card.png?ver=221025144430" alt="">
-                    </div>
-                    <div class="get-card-header mt-3">
-                        <h3>Get a BPL Library Card Today</h3>
-                        <span>
-                            Your library card is your passport to technology, literacy, fluency, community, and so much more.
-                        </span>
-                        <a href="" class="btn get-card">Explore The Possibilities</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-5">
             @foreach($products as $product)
                 <div class="card ms-4" style="width: 18rem; height: 35rem;">
                     <img src="{{ Storage::url($product->image) }}" class="card-img-top" style="height: 75%;" alt="...">

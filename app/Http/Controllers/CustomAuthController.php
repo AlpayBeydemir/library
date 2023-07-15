@@ -26,7 +26,6 @@ class CustomAuthController extends Controller
     public function customRegistration(Request $request)
     {
         try {
-//            dd($request);
             if (!isset($request->email) || empty($request->email)){
                 throw new \Exception("Please Enter Email");
             }

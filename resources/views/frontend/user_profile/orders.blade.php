@@ -34,14 +34,14 @@
                     </div>
 
                     <div class="extend_time_form">
-                        <form id="extend_time">
+                        <form action="{{ route('extend.time', $userProduct->id) }}" method="post" id="extend_time">
                             @csrf
                             <div>
                                 <input class="form-control" type="date" name="delivered_date" id="delivered_date" value="{{ date('Y-m-d') }}" min="{{ date('Y-m-d') }}" max="{{ date('Y-m-d', strtotime(' + 14 days')) }}" >
                             </div>
 
                             <div class="extend-btn">
-                                <button type="button" value="{{ $userProduct->id }}" id="extend_delivered_date_btn" class="btn btn-primary">Extend Delivered Date</button>
+                                <button type="button" value="{{ $userProduct->id }}" id="extend_delivered_date_btn" onclick="ExtendTime()" class="btn btn-primary">Extend Delivered Date</button>
                             </div>
                         </form>
                     </div>
@@ -56,41 +56,10 @@
 
 @section('js')
 
-    <script type="text/javascript">
-        $(document).ready(function (){
-
-            $('#extend_delivered_date_btn').click(function (){
-
-                var formData = new FormData();
-                var extend_time = $('#extend_time').serializeArray();
-
-                $.each(extend_time, function (key, el){
-                    formData.append(el.name, el.value);
-                })
-
-                $.ajax({
-                    url         : "{{ route('extend.time', $userProduct->id) }}",
-                    method      : "POST",
-                    processData : false,
-                    contentType : false,
-                    cache       : false,
-                    data        : formData,
-
-                    success     : function (data){
-                        var result = JSON.parse(data);
-                        if (result.error == 1)
-                        {
-                            toastr.error(result.message);
-                        }
-                        else
-                        {
-                            toastr.success(result.message);
-                            location.href = result.url;
-                        }
-                    }
-                });
-            });
-        });
+    <script>
+        function ExtendTime(){
+            AjaxPost('extend_time');
+        }
     </script>
 
 @endsection()

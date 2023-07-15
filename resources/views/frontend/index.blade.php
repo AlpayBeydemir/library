@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title> Admin Dashboard </title>
+    <title> Library </title>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -21,8 +21,6 @@
 
 <body>
 
-
-
         <!--Header Start-->
         @include('frontend.body.header')
         <!--Header End-->
@@ -37,32 +35,28 @@
         @include('frontend.body.footer')
         <!--Footer End-->
 
-
-<!--Toastr Alert Js-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-
 <!--Toastr Alert Start-->
 <script>
-    @if(Session::has('message'))
-    var type = "{{ Session::get('alert-type','info') }}"
-    switch(type){
-        case 'info':
-            toastr.info(" {{ Session::get('message') }} ");
-            break;
+{{--    @if(Session::has('message'))--}}
+{{--    var type = "{{ Session::get('alert-type','info') }}"--}}
+{{--    switch(type){--}}
+{{--        case 'info':--}}
+{{--            toastr.info(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'success':
-            toastr.success(" {{ Session::get('message') }} ");
-            break;
+{{--        case 'success':--}}
+{{--            toastr.success(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'warning':
-            toastr.warning(" {{ Session::get('message') }} ");
-            break;
+{{--        case 'warning':--}}
+{{--            toastr.warning(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
 
-        case 'error':
-            toastr.error(" {{ Session::get('message') }} ");
-            break;
-    }
-    @endif
+{{--        case 'error':--}}
+{{--            toastr.error(" {{ Session::get('message') }} ");--}}
+{{--            break;--}}
+{{--    }--}}
+{{--    @endif--}}
 </script>
 <!--Toastr Alert End-->
 
@@ -76,11 +70,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <!--Sweet Alert-->
-{{--<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>--}}
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<!--Sweet Alert / Code Js-->
-{{--<script src="{{ asset('backend/assets/js/code.js') }}"></script>--}}
+<!--Ajax Post-->
+<script src="{{ asset('backend/assets/js/AjaxPost.js') }}"></script>
+
+<!--Toastr Alert Js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
 @yield('js')
 

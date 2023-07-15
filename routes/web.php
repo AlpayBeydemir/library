@@ -117,6 +117,7 @@ Route::group(['middleware' => 'user_check:user'], function (){
     Route::post('Add_address', [UserController::class, 'AddAddress'])->name('add_address');
     Route::get('/delete/address/{id}',[UserController::class, 'DeleteAddress'])->name('delete.address');
     Route::get('/Orders',[UserController::class, 'Orders'])->name('Orders');
+    Route::post('/UpdateProfile',[UserController::class, 'UpdateProfile'])->name('UpdateProfile');
 
     // Product Detail
     Route::controller(ProductDetailController::class)->group(function (){

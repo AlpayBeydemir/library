@@ -53,7 +53,7 @@
                         <h6>{{ $product->name }}</h6>
                         <div>
 
-                            <form id="borrow_product_form">
+                            <form action="{{ route('borrow.product', $product->id) }}" method="post" id="borrow_product_form">
                                 @csrf
 
                                 <label for="delivered_date">For</label>
@@ -84,7 +84,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="borrow_product_btn">Borrow</button>
+                        <button type="button" class="btn btn-primary" id="borrow_product_btn" onclick="BorrowProduct()">Borrow</button>
                     </div>
                 </div>
             </div>
@@ -112,39 +112,10 @@
         });
     </script>
 
-    <script type="text/javascript">
-        $(document).ready(function (){
-            $('#borrow_product_btn').click(function (){
-                var formData = new FormData();
-                var product_store = $('#borrow_product_form').serializeArray();
-
-                $.each(product_store, function (key, el){
-                    formData.append(el.name, el.value);
-                })
-
-                $.ajax({
-                    url         : "{{ route('borrow.product', $product->id) }}",
-                    method      : "POST",
-                    processData : false,
-                    contentType : false,
-                    cache       : false,
-                    data        : formData,
-
-                    success     : function (data){
-                        var result = JSON.parse(data);
-                        if (result.error == 1)
-                        {
-                            toastr.error(result.message);
-                        }
-                        else
-                        {
-                            toastr.success(result.message);
-                            location.href = result.url;
-                        }
-                    }
-                });
-            });
-        });
+    <script>
+        function BorrowProduct(){
+            AjaxPost('borrow_product_form')
+        }
     </script>
 
 @endsection()

@@ -13,7 +13,7 @@ class BorrowProductController extends Controller
     public function BorrowProduct(Request $request, $id)
     {
         try {
-//            dd($request);
+
             if (!isset($request->for_days) || empty($request->for_days)){
                 throw new \Exception("Please Select Time");
             }
@@ -34,7 +34,6 @@ class BorrowProductController extends Controller
 
             // bir kullanıcı elinde 3 ten fazla kitap bulunduramaz.
             $user_count_book = BorrowProduct::where('user_id', $user->id)->where('delivered', 0)->count();
-//            dd($user_count_book);
 
             if ($user_count_book >= 3)
                 throw new \Exception("You Can Not Borrow Books More Than 3 At The Same Time");
@@ -43,7 +42,6 @@ class BorrowProductController extends Controller
             // kullanıcı aldığı kitabı teslim etmeden aynı kitabı kiralayamaz.(buton disabled)
             // kullanıcnın alıp henüz teslim etmediği kitaplar!
             $user_has_book = BorrowProduct::where('user_id', $user->id)->where('product_id', $id)->where('delivered', 0)->get();
-//            dd($user_has_book);
 
             foreach ($user_has_book as $user_book){
                 if ($user_book->product_id == $id)
@@ -59,7 +57,6 @@ class BorrowProductController extends Controller
             {
                 $user_address_id = $request->address;
             }
-//            dd($user_address_id);
 
             // issued date
             $issued_date = date('Y-m-d');
@@ -100,31 +97,25 @@ class BorrowProductController extends Controller
 
             $jsonData = [
                 "error" => 0,
-                "message" => "Product Borrowed Successfuly",
-                "url" => route("orders")
+                "msg" => "Product Borrowed Successfuly",
             ];
 
-            return response($jsonData);
-//            echo json_encode($jsonData);
+            return response()->json($jsonData);
 
         } catch (\Exception $e){
 
             $jsonData = [
                 "error" => 1,
-                "message" => $e->getMessage()
+                "msg" => $e->getMessage()
             ];
-            return response($jsonData);
-//            echo json_encode($jsonData);
+            return response()->json($jsonData);
         }
     }
 
     public function ExtendTime(Request $request, $id)
     {
         try {
-
-//            dd($request);
-
-            if (!isset($request->delivered_date) || empty($request->delivered_date))
+            if (empty($request->delivered_date))
             {
                 throw new \Exception("Please Select New Deliver Time");
             }
@@ -139,20 +130,19 @@ class BorrowProductController extends Controller
 
             $jsonData = [
                 "error"   => 0,
-                "message" => "Your Delivered Date Time Is Extended",
-                "url"     => route('orders')
+                "msg" => "Your Delivered Date Time Is Extended",
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
 
         } catch (\Exception $e)
         {
             $jsonData = [
                 "error" => 1,
-                "message" => $e->getMessage()
+                "msg" => $e->getMessage()
             ];
 
-            echo json_encode($jsonData);
+            return response()->json($jsonData);
         }
     }
 }
