@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\EventFileModel;
 use App\Models\EventModel;
+use App\Models\EventParticipantsModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -104,7 +105,6 @@ class EventController extends Controller
     {
         $event = EventModel::find($id);
         $file = EventFileModel::where('event_id', $id)->get();
-
 
         $data = [
             "event" => $event,
@@ -232,5 +232,22 @@ class EventController extends Controller
 
             return redirect()->back()->with($notification);
         }
+    }
+
+    public function DetailEventAdmin($id)
+    {
+        $event         = EventModel::find($id);
+        $files         = EventFileModel::where('event_id', $id)->get();
+        $participants = EventParticipantsModel::with('user')->with('event')->where('event_id', $id)->where('status', 1)->get();
+        $count         = EventParticipantsModel::where('event_id', $id)->where('status', 1)->count();
+
+        $data = [
+            "event"         => $event,
+            "files"         => $files,
+            'participants' => $participants,
+            'count'         => $count
+        ];
+
+        return view('admin.events.event_detail', $data);
     }
 }

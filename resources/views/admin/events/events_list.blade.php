@@ -30,30 +30,33 @@
 
                                 <table id="datatable" class="table table-bordered dt-responsive nowrap " style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                                     <thead>
-                                    <tr>
-                                        <th>Number</th>
-                                        <th>Name</th>
-                                        <th>Explanation</th>
-                                        <th>Address</th>
-                                        <th>Time</th>
-                                        <th>Action</th>
-                                    </tr>
+                                        <tr>
+                                            <th>Number</th>
+                                            <th>Name</th>
+                                            <th>Explanation</th>
+                                            <th>Address</th>
+                                            <th>Time</th>
+                                            <th>Action</th>
+                                        </tr>
                                     </thead>
 
                                     <tbody>
                                     @php($i = 1)
                                     @foreach($events as $event)
-                                        <tr>
-                                            <td>{{ $i++ }}</td>
-                                            <td>{{ $event->name }}</td>
-                                            <td>{{ substr($event->explanation,0,20) }}</td>
-                                            <td>{{ $event->address }}</td>
-                                            <td>{{ $event->selected_time }}</td>
-                                            <td>
-                                                <a href="{{ route('edit.event', $event->id) }}" class="btn btn-info" title="Edit Event"> <i class="fas fa-edit"></i> </a>
-                                                <a href="{{ route('delete.event', $event->id) }}" class="btn btn-danger" title="Delete Event"> <i class="fas fa-trash-alt"></i> </a>
-                                            </td>
-                                        </tr>
+                                        @if($event->selected_time > date('Y-m-d'))
+                                            <tr>
+                                                <td>{{ $i++ }}</td>
+                                                <td>{{ $event->name }}</td>
+                                                <td>{{ substr($event->explanation,0,20) }}</td>
+                                                <td>{{ $event->address }}</td>
+                                                <td>{{ $event->selected_time }}</td>
+                                                <td>
+                                                    <a href="{{ route('detail.event.admin', $event->id) }}" class="btn btn-dark" title="Detail Event"> <i class="fas fa-book-open"></i></a>
+                                                    <a href="{{ route('edit.event', $event->id) }}" class="btn btn-info" title="Edit Event"> <i class="fas fa-edit"></i> </a>
+                                                    <a href="{{ route('delete.event', $event->id) }}" class="btn btn-danger" title="Delete Event"> <i class="fas fa-trash-alt"></i> </a>
+                                                </td>
+                                            </tr>
+                                        @endif
                                     @endforeach
                                     </tbody>
 

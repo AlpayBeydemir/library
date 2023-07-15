@@ -13,3 +13,22 @@
     margin-bottom: 2rem;
 }
 
+.participants{
+    margin-top: 1rem;
+}
+
+.participant-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left:  2rem;
+    padding-right: 2rem;
+    margin-top: 2rem;
+    padding-top: 0.5rem;
+}
+
+.event-participant-label{
+    color: red;
+    background-color: #fff;
+}

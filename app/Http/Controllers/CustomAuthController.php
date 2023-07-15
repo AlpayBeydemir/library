@@ -98,7 +98,7 @@ class CustomAuthController extends Controller
         else
         {
             $products = Product::orderBy("id", "DESC")->take(10)->get();
-            $events = EventModel::where('deleted',0)->orderBy('selected_time', 'DESC')->limit(5)->get();
+            $events   = EventModel::where('deleted',0)->orderBy('selected_time', 'DESC')->limit(5)->get();
 
             $data = [
                 'products' => $products,

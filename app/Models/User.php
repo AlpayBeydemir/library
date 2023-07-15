@@ -62,4 +62,9 @@ class User extends Authenticatable
         return $this->hasMany(BorrowProduct::class);
     }
 
+    public function participants(): HasMany
+    {
+        return $this->hasMany(EventParticipantsModel::class, 'participants', 'id');
+    }
+
 }

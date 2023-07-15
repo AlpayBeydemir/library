@@ -92,6 +92,7 @@ Route::group(['middleware' => 'user_check:manager:admin'], function (){
         Route::get('/Edit/Event/{id}','EditEvent')->name('edit.event');
         Route::post('/Update/Event/{id}','UpdateEvent')->name('update.event');
         Route::get('/Delete/Event/{id}','DeleteEvent')->name('delete.event');
+        Route::get('/Detail/Event/Admin/{id}','DetailEventAdmin')->name('detail.event.admin');
 
     });
 
